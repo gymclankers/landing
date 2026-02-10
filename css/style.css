@@ -228,6 +228,14 @@ body {
   transform: translateY(-1px);
 }
 
+.btn-disabled {
+  background: transparent;
+  color: #555;
+  border: 1.5px solid #333;
+  cursor: default;
+  opacity: 0.5;
+}
+
 .btn-secondary {
   background: transparent;
   color: var(--amber);
