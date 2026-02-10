@@ -63,10 +63,39 @@
         <path class="hex hex-2" d="M 41.3 49.5 L 30 56 L 23.3 52.1" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
         <path class="hex hex-3" d="M 19.9 50.2 L 7.5 43 L 7.5 26.1" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
         <path class="hex hex-4" d="M 7.5 23.5 L 7.5 17 L 23.3 7.9" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-        <!-- Dumbbell -->
-        <path d="M 16 30 C 16 27.5, 22 26, 30 25.5 C 38 26, 44 27.5, 44 30 C 44 32.5, 38 34, 30 34.5 C 22 34, 16 32.5, 16 30 Z" fill="#f59e0b"/>
-        <rect x="10" y="22" width="8" height="16" rx="2" fill="#f59e0b"/>
-        <rect x="42" y="22" width="8" height="16" rx="2" fill="#f59e0b"/>
+        <!-- Robot arm (from gymclankers.png, scaled to fit) -->
+        <g transform="translate(5.3, 5.0) scale(0.085)" fill="none" stroke="#f59e0b" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Shoulder -->
+          <circle cx="100" cy="240" r="90" stroke-width="13"/>
+          <polygon points="120,191.8 148.2,220 148.2,260 120,288.2 80,288.2 51.8,260 51.8,220 80,191.8" stroke-width="13"/>
+          <!-- Elbow -->
+          <circle cx="375" cy="450" r="54" stroke-width="11"/>
+          <polygon points="356.4,430.4 382.7,424.1 401.3,443.7 393.6,469.6 367.3,475.9 348.7,456.3" stroke-width="9"/>
+          <!-- Arm arc -->
+          <path d="M 214.6 252.0 A 115.2 115.2 0 0 1 125.9 352.2" stroke-width="11"/>
+          <!-- Triceps -->
+          <path d="M 125.9 352.2 L 305.4 476.7" stroke-width="9"/>
+          <!-- Biceps -->
+          <path d="M 350.7 379.5 Q 322.2 296.8 214.6 252.0" stroke-width="9"/>
+          <!-- Elbow arc -->
+          <path d="M 305.4 476.7 A 74.5 74.5 0 0 1 350.7 379.5" stroke-width="9"/>
+          <!-- Forearm arc -->
+          <path d="M 353.2 378.7 A 74.5 74.5 0 0 1 446.6 429.5" stroke-width="9"/>
+          <!-- Forearm up -->
+          <path d="M 446.6 429.5 Q 490.0 324.0 500.0 220.8" stroke-width="9"/>
+          <!-- Straight segment -->
+          <path d="M 500.0 220.8 L 435.0 199.2" stroke-width="9"/>
+          <!-- Forearm back -->
+          <path d="M 435.0 199.2 Q 340.0 324.0 353.2 378.7" stroke-width="9"/>
+          <!-- Wrist -->
+          <path d="M 482.5 212.4 L 490.5 176.4" stroke-width="9"/>
+          <path d="M 446.5 201.6 L 455.0 168.0" stroke-width="9"/>
+          <!-- Hand -->
+          <path d="M 433.0 160.8 L 516.5 175.2 L 527.0 98.4 L 444.0 86.4 Z" stroke-width="9"/>
+          <!-- Detail strokes -->
+          <path d="M 195.1 305.1 L 318.2 401.8" stroke-width="9"/>
+          <path d="M 392.2 377.5 L 450.0 208.8" stroke-width="9"/>
+        </g>
       </svg>
     </div>
 
