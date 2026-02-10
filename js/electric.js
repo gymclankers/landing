@@ -68,7 +68,7 @@
 
     // Random letter flicker
     setInterval(() => {
-      if (Math.random() < 0.3) flickerLetter();
-    }, 200);
+      if (Math.random() < 0.2) flickerLetter();
+    }, 800);
   }, SPARK_DELAY);
 })();
