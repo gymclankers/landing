@@ -34,7 +34,16 @@
     setTimeout(() => spark.remove(), 600);
   }
 
-  // Start sparking after the trace animation
+  // Letter flicker effect
+  const letters = document.querySelectorAll('.letter');
+  function flickerLetter() {
+    const idx = Math.floor(Math.random() * letters.length);
+    const letter = letters[idx];
+    letter.classList.add('flicker');
+    setTimeout(() => letter.classList.remove('flicker'), 80 + Math.random() * 60);
+  }
+
+  // Start sparking + flickering after the trace animation
   setTimeout(() => {
     // Initial burst
     for (let i = 0; i < 12; i++) {
@@ -47,5 +56,10 @@
         for (let i = 0; i < SPARKS_PER_TICK; i++) spawnSpark();
       }
     }, SPARK_INTERVAL);
+
+    // Random letter flicker
+    setInterval(() => {
+      if (Math.random() < 0.3) flickerLetter();
+    }, 200);
   }, SPARK_DELAY);
 })();

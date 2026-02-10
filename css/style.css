@@ -146,6 +146,15 @@ body {
   50% { opacity: 0.3; }
 }
 
+/* Letter flicker */
+.letter {
+  transition: fill-opacity 0.08s ease;
+}
+
+.letter.flicker {
+  fill-opacity: 0.15;
+}
+
 /* Spark particles (added by JS) */
 .spark {
   position: absolute;
