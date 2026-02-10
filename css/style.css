@@ -34,28 +34,14 @@ body {
   position: fixed;
   inset: 0;
   z-index: 0;
-  /* Replace with Midjourney art: background-image: url('/img/bg.jpg'); */
-  background:
-    radial-gradient(ellipse at 50% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 50%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 30%, rgba(180, 83, 9, 0.05) 0%, transparent 50%),
-    linear-gradient(180deg, #080808 0%, #0a0a0a 50%, #060606 100%);
-  /* Subtle noise texture */
-  background-blend-mode: screen, screen, screen, normal;
-}
-
-/* When background image is ready, uncomment and use: */
-/*
-.bg-overlay {
-  background: url('/img/bg.jpg') center/cover no-repeat fixed;
+  background: url('/img/bg.png') center/cover no-repeat fixed;
 }
 .bg-overlay::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(5, 5, 5, 0.7);
+  background: rgba(5, 5, 5, 0.65);
 }
-*/
 
 /* Hero layout */
 .hero {
