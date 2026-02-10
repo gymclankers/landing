@@ -34,13 +34,22 @@
     setTimeout(() => spark.remove(), 600);
   }
 
-  // Letter flicker effect
+  // Letter flicker effect — multiple rapid flicks like a neon stutter
   const letters = document.querySelectorAll('.letter');
   function flickerLetter() {
     const idx = Math.floor(Math.random() * letters.length);
     const letter = letters[idx];
-    letter.classList.add('flicker');
-    setTimeout(() => letter.classList.remove('flicker'), 80 + Math.random() * 60);
+    const flicks = 2 + Math.floor(Math.random() * 3);
+    let i = 0;
+    function flick() {
+      letter.classList.add('flicker');
+      setTimeout(() => {
+        letter.classList.remove('flicker');
+        i++;
+        if (i < flicks) setTimeout(flick, 50 + Math.random() * 40);
+      }, 40 + Math.random() * 30);
+    }
+    flick();
   }
 
   // Start sparking + flickering after the trace animation
