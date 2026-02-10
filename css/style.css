@@ -182,7 +182,7 @@ body {
 
 /* Tagline */
 .tagline {
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
   font-weight: 400;
   color: var(--text-muted);
