@@ -84,8 +84,8 @@ body {
 
 /* Wordmark SVG */
 .wordmark-container {
-  width: 100%;
-  max-width: 700px;
+  width: 90%;
+  max-width: 800px;
 }
 
 .wordmark {
@@ -286,15 +286,7 @@ body {
 /* Mobile */
 @media (max-width: 600px) {
   .wordmark-container {
-    max-width: 95%;
-  }
-
-  .wordmark text {
-    font-size: 48px;
-  }
-
-  .wordmark {
-    viewBox: 0 0 600 80;
+    width: 95%;
   }
 
   .tagline {
@@ -310,5 +302,9 @@ body {
   .btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .player {
+    max-width: 90%;
   }
 }
