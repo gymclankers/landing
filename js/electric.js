@@ -1,5 +1,5 @@
 // Electric spark effect along the wordmark
-// Spawns small amber particles that drift outward from the text edges
+// Spawns small green particles that drift outward from the text edges
 
 (function () {
   const container = document.querySelector('.wordmark-container');

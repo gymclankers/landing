@@ -1,10 +1,10 @@
-/* GymClankers Landing — Dark industrial, amber glow */
+/* GymClankers Landing — Dark industrial, lime green glow */
 
 :root {
   --bg: #050505;
-  --amber: #f59e0b;
-  --amber-dim: #b45309;
-  --amber-glow: rgba(245, 158, 11, 0.3);
+  --accent: #32CB32;
+  --accent-dim: #228B22;
+  --accent-glow: rgba(50, 203, 50, 0.3);
   --text: #e5e5e5;
   --text-muted: #888;
   --surface: rgba(20, 20, 20, 0.85);
@@ -76,7 +76,7 @@ body {
 .logo-icon {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 8px var(--amber-glow));
+  filter: drop-shadow(0 0 8px var(--accent-glow));
   cursor: pointer;
 }
 
@@ -85,6 +85,16 @@ body {
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
   transform-origin: 30px 30px;
   opacity: 0.6;
+}
+
+/* Hex group spin on hover */
+.hex-group {
+  transition: transform 0.24s ease-in-out;
+  transform-origin: 30px 30px;
+}
+
+.logo:hover .hex-group {
+  transform: rotate(180deg);
 }
 
 .logo:hover .hex {
@@ -96,6 +106,32 @@ body {
 .logo:hover .hex-2 { transform: translate(0.4px, 6.0px); }
 .logo:hover .hex-3 { transform: translate(-5.0px, 2.5px); }
 .logo:hover .hex-4 { transform: translate(-3.8px, -3.0px); }
+
+/* Robot arm — brighter at rest, flex on hover */
+.robot-arm {
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
+  transform-origin: 100px 240px; /* shoulder joint pivot */
+}
+
+.logo:hover .robot-arm {
+  opacity: 1;
+  transform: rotate(-3deg) scaleY(1.03);
+  filter: drop-shadow(0 0 4px var(--accent-glow));
+}
+
+/* Backdrop blur behind hexagon */
+.hex-blur-fill {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.14);
+  transition: transform 0.3s ease;
+  transform-origin: 30px 30px;
+}
+
+.logo:hover .hex-blur-fill {
+  transform: scale(1.08);
+}
 
 /* Wordmark SVG */
 .wordmark-container {
@@ -120,7 +156,7 @@ body {
 .wordmark-trace {
   stroke-dasharray: 3000;
   stroke-dashoffset: 3000;
-  animation: trace 3s ease-in-out 1s forwards, flicker 0.15s ease-in-out 3.5s 6;
+  animation: trace 3s ease-in-out 1s forwards, flickerGrad 1.8s ease-in 3.5s 1 forwards;
 }
 
 .wordmark-fill {
@@ -138,9 +174,22 @@ body {
   to { opacity: 1; }
 }
 
-@keyframes flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+/* Graduated flicker — 6 blinks that speed up (Safari-safe, single play) */
+@keyframes flickerGrad {
+  0%  { opacity: 1; }
+  8%  { opacity: 0.3; }
+  16% { opacity: 1; }
+  30% { opacity: 0.3; }
+  38% { opacity: 1; }
+  48% { opacity: 0.3; }
+  54% { opacity: 1; }
+  62% { opacity: 0.3; }
+  66% { opacity: 1; }
+  73% { opacity: 0.3; }
+  76% { opacity: 1; }
+  82% { opacity: 0.3; }
+  85% { opacity: 1; }
+  100% { opacity: 1; }
 }
 
 /* Letter flicker */
@@ -157,10 +206,10 @@ body {
   position: absolute;
   width: 3px;
   height: 3px;
-  background: var(--amber);
+  background: var(--accent);
   border-radius: 50%;
   pointer-events: none;
-  box-shadow: 0 0 6px var(--amber), 0 0 12px var(--amber-glow);
+  box-shadow: 0 0 6px var(--accent), 0 0 12px var(--accent-glow);
   animation: sparkFade 0.6s ease-out forwards;
 }
 
@@ -177,9 +226,9 @@ body {
 
 /* Tagline */
 .tagline {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text-muted);
   letter-spacing: 0.15em;
   text-transform: lowercase;
@@ -202,7 +251,7 @@ body {
   padding: 0.75rem 2.5rem;
   border: none;
   border-radius: 6px;
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -213,13 +262,13 @@ body {
 }
 
 .btn-primary {
-  background: var(--amber);
+  background: var(--accent);
   color: #000;
 }
 
 .btn-primary:hover {
-  background: #fbbf24;
-  box-shadow: 0 0 20px var(--amber-glow), 0 0 40px rgba(245, 158, 11, 0.15);
+  background: #45E645;
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(50, 203, 50, 0.15);
   transform: translateY(-1px);
 }
 
@@ -233,15 +282,71 @@ body {
 
 .btn-secondary {
   background: transparent;
-  color: var(--amber);
-  border: 1.5px solid var(--amber-dim);
+  color: var(--accent);
+  border: 1.5px solid var(--accent-dim);
 }
 
 .btn-secondary:hover {
-  border-color: var(--amber);
-  box-shadow: 0 0 20px var(--amber-glow);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
   transform: translateY(-1px);
 }
+
+/* Music button — note triplet + shatter */
+.btn-music {
+  position: relative;
+  overflow: visible;
+  gap: 0.3rem;
+}
+
+.btn-music .note {
+  font-size: 1.1rem;
+  position: relative;
+  z-index: 1;
+  color: #000;
+  transition: color 0.25s ease;
+}
+
+.btn-music .note-mid {
+  transform: translateY(-3px);
+  display: inline-block;
+}
+
+/* Shards — tessellating pieces of the button */
+.shard {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 6px;
+}
+
+.shard-0 { clip-path: polygon(0% 0%, 40% 0%, 25% 50%, 0% 45%); }
+.shard-1 { clip-path: polygon(40% 0%, 75% 0%, 60% 55%, 25% 50%); }
+.shard-2 { clip-path: polygon(75% 0%, 100% 0%, 100% 50%, 60% 55%); }
+.shard-3 { clip-path: polygon(0% 45%, 25% 50%, 45% 100%, 0% 100%); }
+.shard-4 { clip-path: polygon(25% 50%, 60% 55%, 100% 50%, 100% 100%, 45% 100%); }
+
+.btn-music:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.btn-music:hover .note {
+  color: var(--accent);
+}
+
+.btn-music:hover .shard {
+  opacity: 1;
+}
+
+.btn-music:hover .shard-0 { transform: translate(-12px, -8px) rotate(-8deg); }
+.btn-music:hover .shard-1 { transform: translate(4px, -10px) rotate(5deg); }
+.btn-music:hover .shard-2 { transform: translate(14px, -6px) rotate(10deg); }
+.btn-music:hover .shard-3 { transform: translate(-10px, 10px) rotate(-6deg); }
+.btn-music:hover .shard-4 { transform: translate(10px, 12px) rotate(7deg); }
 
 /* Spotify player */
 .player {
@@ -253,7 +358,7 @@ body {
 
 .player-placeholder {
   background: var(--surface);
-  border: 1px solid rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(50, 203, 50, 0.15);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -271,7 +376,7 @@ body {
 
 .player-icon {
   font-size: 1.5rem;
-  color: var(--amber-dim);
+  color: var(--accent-dim);
 }
 
 /* Spotify iframe style (when live) */
@@ -304,8 +409,8 @@ body {
 }
 
 .social-link:hover {
-  color: var(--amber);
-  filter: drop-shadow(0 0 6px var(--amber-glow));
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
   transform: translateY(-2px);
 }
 

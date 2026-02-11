@@ -22,7 +22,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Text+Me+One&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Text+Me+One&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/style.css">
 
@@ -56,45 +56,57 @@
     <!-- Logo -->
     <div class="logo">
       <svg viewBox="-8 -10 76 80" class="logo-icon">
+        <defs>
+          <clipPath id="hex-clip">
+            <polygon points="30,-3 58.6,13.5 58.6,46.5 30,63 1.4,46.5 1.4,13.5"/>
+          </clipPath>
+        </defs>
+        <!-- Backdrop blur behind hexagon -->
+        <foreignObject x="1.4" y="-3" width="57.2" height="66" clip-path="url(#hex-clip)">
+          <div xmlns="http://www.w3.org/1999/xhtml" class="hex-blur-fill" style="width:100%;height:100%"></div>
+        </foreignObject>
         <!-- Five-part hexagon (point-up, uneven segments, r=33) -->
-        <!-- Vertices: v0(30,-3) v1(58.6,13.5) v2(58.6,46.5) v3(30,63) v4(1.4,46.5) v5(1.4,13.5) -->
-        <path class="hex hex-0" d="M 24.3 0.3 L 30 -3 L 45.7 6.1" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-        <path class="hex hex-1" d="M 48.6 7.7 L 58.6 13.5 L 58.6 46.5 L 48.6 52.3" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-        <path class="hex hex-2" d="M 44.3 54.8 L 30 63 L 21.4 58.1" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-        <path class="hex hex-3" d="M 17.1 55.6 L 1.4 46.5 L 1.4 25.0" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
-        <path class="hex hex-4" d="M 1.4 21.8 L 1.4 13.5 L 21.4 2.0" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+        <g class="hex-group">
+          <path class="hex hex-0" d="M 24.3 0.3 L 30 -3 L 45.7 6.1" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-1" d="M 48.6 7.7 L 58.6 13.5 L 58.6 46.5 L 48.6 52.3" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-2" d="M 44.3 54.8 L 30 63 L 21.4 58.1" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-3" d="M 17.1 55.6 L 1.4 46.5 L 1.4 25.0" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-4" d="M 1.4 21.8 L 1.4 13.5 L 21.4 2.0" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+        </g>
         <!-- Robot arm (from gymclankers.png, scaled to fit) -->
-        <g transform="translate(5.3, 5.0) scale(0.085)" fill="none" stroke="#f59e0b" stroke-linecap="round" stroke-linejoin="round">
-          <!-- Shoulder -->
-          <circle cx="100" cy="240" r="90" stroke-width="13"/>
-          <polygon points="120,191.8 148.2,220 148.2,260 120,288.2 80,288.2 51.8,260 51.8,220 80,191.8" stroke-width="13"/>
-          <!-- Elbow -->
-          <circle cx="375" cy="450" r="54" stroke-width="11"/>
-          <polygon points="356.4,430.4 382.7,424.1 401.3,443.7 393.6,469.6 367.3,475.9 348.7,456.3" stroke-width="9"/>
-          <!-- Arm arc -->
-          <path d="M 214.6 252.0 A 115.2 115.2 0 0 1 125.9 352.2" stroke-width="11"/>
-          <!-- Triceps -->
-          <path d="M 125.9 352.2 L 305.4 476.7" stroke-width="9"/>
-          <!-- Biceps -->
-          <path d="M 350.7 379.5 Q 322.2 296.8 214.6 252.0" stroke-width="9"/>
-          <!-- Elbow arc -->
-          <path d="M 305.4 476.7 A 74.5 74.5 0 0 1 350.7 379.5" stroke-width="9"/>
-          <!-- Forearm arc -->
-          <path d="M 353.2 378.7 A 74.5 74.5 0 0 1 446.6 429.5" stroke-width="9"/>
-          <!-- Forearm up -->
-          <path d="M 446.6 429.5 Q 490.0 324.0 500.0 220.8" stroke-width="9"/>
-          <!-- Straight segment -->
-          <path d="M 500.0 220.8 L 435.0 199.2" stroke-width="9"/>
-          <!-- Forearm back -->
-          <path d="M 435.0 199.2 Q 340.0 324.0 353.2 378.7" stroke-width="9"/>
-          <!-- Wrist -->
-          <path d="M 482.5 212.4 L 490.5 176.4" stroke-width="9"/>
-          <path d="M 446.5 201.6 L 455.0 168.0" stroke-width="9"/>
-          <!-- Hand -->
-          <path d="M 433.0 160.8 L 516.5 175.2 L 527.0 98.4 L 444.0 86.4 Z" stroke-width="9"/>
-          <!-- Detail strokes -->
-          <path d="M 195.1 305.1 L 318.2 401.8" stroke-width="9"/>
-          <path d="M 392.2 377.5 L 450.0 208.8" stroke-width="9"/>
+        <g transform="translate(5.3, 5.0) scale(0.085)">
+          <g class="robot-arm" fill="none" stroke="#32CB32" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Shoulder -->
+            <circle cx="100" cy="240" r="90" stroke-width="13"/>
+            <polygon points="120,191.8 148.2,220 148.2,260 120,288.2 80,288.2 51.8,260 51.8,220 80,191.8" stroke-width="13"/>
+            <!-- Elbow -->
+            <circle cx="375" cy="450" r="54" stroke-width="11"/>
+            <polygon points="356.4,430.4 382.7,424.1 401.3,443.7 393.6,469.6 367.3,475.9 348.7,456.3" stroke-width="9"/>
+            <!-- Arm arc -->
+            <path d="M 214.6 252.0 A 115.2 115.2 0 0 1 125.9 352.2" stroke-width="11"/>
+            <!-- Triceps -->
+            <path d="M 125.9 352.2 L 305.4 476.7" stroke-width="9"/>
+            <!-- Biceps -->
+            <path d="M 350.7 379.5 Q 322.2 296.8 214.6 252.0" stroke-width="9"/>
+            <!-- Elbow arc -->
+            <path d="M 305.4 476.7 A 74.5 74.5 0 0 1 350.7 379.5" stroke-width="9"/>
+            <!-- Forearm arc -->
+            <path d="M 353.2 378.7 A 74.5 74.5 0 0 1 446.6 429.5" stroke-width="9"/>
+            <!-- Forearm up -->
+            <path d="M 446.6 429.5 Q 490.0 324.0 500.0 220.8" stroke-width="9"/>
+            <!-- Straight segment -->
+            <path d="M 500.0 220.8 L 435.0 199.2" stroke-width="9"/>
+            <!-- Forearm back -->
+            <path d="M 435.0 199.2 Q 340.0 324.0 353.2 378.7" stroke-width="9"/>
+            <!-- Wrist -->
+            <path d="M 482.5 212.4 L 490.5 176.4" stroke-width="9"/>
+            <path d="M 446.5 201.6 L 455.0 168.0" stroke-width="9"/>
+            <!-- Hand -->
+            <path d="M 433.0 160.8 L 516.5 175.2 L 527.0 98.4 L 444.0 86.4 Z" stroke-width="9"/>
+            <!-- Detail strokes -->
+            <path d="M 195.1 305.1 L 318.2 401.8" stroke-width="9"/>
+            <path d="M 392.2 377.5 L 450.0 208.8" stroke-width="9"/>
+          </g>
         </g>
       </svg>
     </div>
@@ -123,7 +135,7 @@
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-glow"
           font-family="'Text Me One', sans-serif" font-size="130"
-          fill="none" stroke="#f59e0b" stroke-width="3"
+          fill="none" stroke="#32CB32" stroke-width="3"
           filter="url(#glow-strong)">
           GYMCLANKERS
         </text>
@@ -132,7 +144,7 @@
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-trace"
           font-family="'Text Me One', sans-serif" font-size="130"
-          fill="none" stroke="#f59e0b" stroke-width="2"
+          fill="none" stroke="#32CB32" stroke-width="2"
           filter="url(#glow)">
           GYMCLANKERS
         </text>
@@ -141,7 +153,7 @@
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-fill"
           font-family="'Text Me One', sans-serif" font-size="130"
-          fill="#f59e0b" opacity="0"><tspan class="letter">G</tspan><tspan class="letter">Y</tspan><tspan class="letter">M</tspan><tspan class="letter">C</tspan><tspan class="letter">L</tspan><tspan class="letter">A</tspan><tspan class="letter">N</tspan><tspan class="letter">K</tspan><tspan class="letter">E</tspan><tspan class="letter">R</tspan><tspan class="letter">S</tspan></text>
+          fill="#32CB32" opacity="0"><tspan class="letter">G</tspan><tspan class="letter">Y</tspan><tspan class="letter">M</tspan><tspan class="letter">C</tspan><tspan class="letter">L</tspan><tspan class="letter">A</tspan><tspan class="letter">N</tspan><tspan class="letter">K</tspan><tspan class="letter">E</tspan><tspan class="letter">R</tspan><tspan class="letter">S</tspan></text>
       </svg>
     </div>
 
@@ -150,7 +162,7 @@
 
     <!-- Buttons -->
     <div class="buttons">
-      <a href="https://open.spotify.com/artist/2WOME06M2SCNzwbFfsFkLO" class="btn btn-primary">Music</a>
+      <a href="https://open.spotify.com/artist/2WOME06M2SCNzwbFfsFkLO" class="btn btn-primary btn-music"><span class="note">&#9833;</span><span class="note note-mid">&#9834;</span><span class="note">&#9835;</span><span class="shard shard-0"></span><span class="shard shard-1"></span><span class="shard shard-2"></span><span class="shard shard-3"></span><span class="shard shard-4"></span></a>
       <span class="btn btn-disabled">Co-Create</span>
     </div>
 
