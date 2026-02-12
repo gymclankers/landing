@@ -59,16 +59,18 @@
       setTimeout(spawnSpark, i * 40);
     }
 
-    // Ongoing ambient sparks
-    setInterval(() => {
+    // Ongoing ambient sparks — stop after ~15s so they don't run forever
+    var sparkTimer = setInterval(() => {
       if (Math.random() < 0.6) {
         for (let i = 0; i < SPARKS_PER_TICK; i++) spawnSpark();
       }
     }, SPARK_INTERVAL);
+    setTimeout(() => clearInterval(sparkTimer), 15000);
 
-    // Random letter flicker
-    setInterval(() => {
+    // Random letter flicker — stop after ~20s
+    var flickerTimer = setInterval(() => {
       if (Math.random() < 0.2) flickerLetter();
     }, 800);
+    setTimeout(() => clearInterval(flickerTimer), 20000);
   }, SPARK_DELAY);
 })();

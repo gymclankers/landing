@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Waiting+for+the+Sunrise&display=swap" rel="stylesheet">
 
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://gymclankers.com/">
   <link rel="stylesheet" href="/css/style.css">
 
   <!-- Google Analytics -->
@@ -202,6 +203,19 @@
       };
       img.src = '/img/banner_01.webp';
     })();
+
+    // GA event tracking
+    document.querySelector('.btn-music').addEventListener('click', function () {
+      gtag('event', 'click_music', { link: 'spotify' });
+    });
+    document.querySelectorAll('.social-link').forEach(function (link) {
+      link.addEventListener('click', function () {
+        gtag('event', 'click_social', { platform: this.getAttribute('aria-label').toLowerCase() });
+      });
+    });
+    document.querySelector('.btn-disabled').addEventListener('mouseenter', function () {
+      gtag('event', 'hover_cocreate');
+    }, { once: true });
   </script>
 </body>
 </html>
