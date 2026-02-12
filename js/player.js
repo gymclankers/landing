@@ -34,7 +34,9 @@
   var volumeBtn = document.getElementById('volume-btn');
   var volOn = volumeBtn.querySelector('.vol-on');
   var volOff = volumeBtn.querySelector('.vol-off');
+  var volumeSlider = document.getElementById('volume-slider');
   var progressWrap = document.getElementById('progress-wrap');
+  var progressScrub = document.getElementById('progress-scrub');
   var progressFill = document.getElementById('progress-fill');
   var progressHandle = document.getElementById('progress-handle');
   var progressRobot = document.getElementById('progress-robot');
@@ -147,18 +149,32 @@
     trackDuration.textContent = formatTime(audio.duration);
   });
 
-  // Volume / mute
+  // Volume
   var savedVolume = 1;
+
+  function updateVolIcon() {
+    var muted = audio.muted || audio.volume === 0;
+    volOn.style.display = muted ? 'none' : '';
+    volOff.style.display = muted ? '' : 'none';
+  }
+
   volumeBtn.addEventListener('click', function () {
     if (audio.muted) {
       audio.muted = false;
-      audio.volume = savedVolume;
+      audio.volume = savedVolume || 1;
+      volumeSlider.value = audio.volume;
     } else {
       savedVolume = audio.volume || 1;
       audio.muted = true;
     }
-    volOn.style.display = audio.muted ? 'none' : '';
-    volOff.style.display = audio.muted ? '' : 'none';
+    updateVolIcon();
+  });
+
+  volumeSlider.addEventListener('input', function () {
+    audio.volume = parseFloat(this.value);
+    audio.muted = false;
+    if (audio.volume > 0) savedVolume = audio.volume;
+    updateVolIcon();
   });
 
   // Scrubbing — mouse + touch
@@ -174,7 +190,7 @@
     }
   }
 
-  progressWrap.addEventListener('mousedown', function (e) {
+  progressScrub.addEventListener('mousedown', function (e) {
     scrubbing = true;
     scrub(e);
   });
@@ -185,14 +201,14 @@
     scrubbing = false;
   });
 
-  progressWrap.addEventListener('touchstart', function (e) {
+  progressScrub.addEventListener('touchstart', function (e) {
     scrubbing = true;
     scrub(e);
   }, { passive: true });
-  progressWrap.addEventListener('touchmove', function (e) {
+  progressScrub.addEventListener('touchmove', function (e) {
     if (scrubbing) scrub(e);
   }, { passive: true });
-  progressWrap.addEventListener('touchend', function () {
+  progressScrub.addEventListener('touchend', function () {
     scrubbing = false;
   });
 
@@ -203,4 +219,70 @@
   setTimeout(function () {
     bar.classList.add('visible');
   }, 5200);
+
+  // ─── Web Audio API visualizer ───
+  var canvas = document.getElementById('hero-visualizer');
+  var ctx = canvas ? canvas.getContext('2d') : null;
+  var audioCtx = null;
+  var analyser = null;
+  var source = null;
+  var freqData = null;
+  var animId = null;
+
+  function initAnalyser() {
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 64;
+    source = audioCtx.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    freqData = new Uint8Array(analyser.frequencyBinCount);
+  }
+
+  function drawVisualizer() {
+    if (!analyser || !ctx) return;
+    analyser.getByteFrequencyData(freqData);
+
+    var w = canvas.width;
+    var h = canvas.height;
+    var cx = w / 2;
+    var cy = h / 2;
+    var bars = 24;
+    var innerR = 12;
+    var maxR = 28;
+
+    ctx.clearRect(0, 0, w, h);
+
+    for (var i = 0; i < bars; i++) {
+      var idx = Math.floor(i * freqData.length / bars);
+      var val = freqData[idx] / 255;
+      var angle = (i / bars) * Math.PI * 2 - Math.PI / 2;
+      var barLen = innerR + val * (maxR - innerR);
+
+      var x1 = cx + Math.cos(angle) * innerR;
+      var y1 = cy + Math.sin(angle) * innerR;
+      var x2 = cx + Math.cos(angle) * barLen;
+      var y2 = cy + Math.sin(angle) * barLen;
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = 'rgba(186, 37, 37, ' + (0.4 + val * 0.6) + ')';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    animId = requestAnimationFrame(drawVisualizer);
+  }
+
+  audio.addEventListener('play', function () {
+    try { initAnalyser(); } catch (e) {}
+    if (ctx) drawVisualizer();
+  });
+
+  audio.addEventListener('pause', function () {
+    if (animId) { cancelAnimationFrame(animId); animId = null; }
+  });
 })();

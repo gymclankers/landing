@@ -67,10 +67,9 @@
     }, SPARK_INTERVAL);
     setTimeout(() => clearInterval(sparkTimer), 15000);
 
-    // Random letter flicker — stop after ~20s
-    var flickerTimer = setInterval(() => {
+    // Random letter flicker — runs indefinitely
+    setInterval(() => {
       if (Math.random() < 0.2) flickerLetter();
     }, 800);
-    setTimeout(() => clearInterval(flickerTimer), 20000);
   }, SPARK_DELAY);
 })();
