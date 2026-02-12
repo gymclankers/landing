@@ -220,7 +220,7 @@
     bar.classList.add('visible');
   }, 5200);
 
-  // ─── Web Audio API visualizer ───
+  // ─── Visualizer (Web Audio with simulated fallback) ───
   var canvas = document.getElementById('hero-visualizer');
   var ctx = canvas ? canvas.getContext('2d') : null;
   var audioCtx = null;
@@ -228,21 +228,39 @@
   var source = null;
   var freqData = null;
   var animId = null;
+  var useSimulated = false;
+  var corsCheckDone = false;
+  var corsCheckFrames = 0;
+  var simTime = 0;
 
   function initAnalyser() {
     if (audioCtx) return;
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 64;
-    source = audioCtx.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    freqData = new Uint8Array(analyser.frequencyBinCount);
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      freqData = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) {
+      useSimulated = true;
+      corsCheckDone = true;
+    }
   }
 
-  function drawVisualizer() {
-    if (!analyser || !ctx) return;
-    analyser.getByteFrequencyData(freqData);
+  function drawVisualizer(ts) {
+    if (!ctx) return;
+
+    // Check first ~10 frames for all-zero data (CORS block)
+    if (analyser && !corsCheckDone) {
+      analyser.getByteFrequencyData(freqData);
+      corsCheckFrames++;
+      var sum = 0;
+      for (var k = 0; k < freqData.length; k++) sum += freqData[k];
+      if (sum > 0) { corsCheckDone = true; useSimulated = false; }
+      else if (corsCheckFrames > 15) { corsCheckDone = true; useSimulated = true; }
+    }
 
     var w = canvas.width;
     var h = canvas.height;
@@ -254,9 +272,24 @@
 
     ctx.clearRect(0, 0, w, h);
 
+    if (!useSimulated && analyser) {
+      analyser.getByteFrequencyData(freqData);
+    }
+
+    simTime = (ts || 0) * 0.001;
+
     for (var i = 0; i < bars; i++) {
-      var idx = Math.floor(i * freqData.length / bars);
-      var val = freqData[idx] / 255;
+      var val;
+      if (useSimulated || !analyser) {
+        // Simulated pulse — overlapping sine waves for organic feel
+        val = 0.3 + 0.25 * Math.sin(simTime * 3.0 + i * 0.8)
+                    + 0.2 * Math.sin(simTime * 5.0 + i * 1.3)
+                    + 0.15 * Math.sin(simTime * 1.5 + i * 2.1);
+        val = Math.max(0.1, Math.min(1, val));
+      } else {
+        var idx = Math.floor(i * freqData.length / bars);
+        val = freqData[idx] / 255;
+      }
       var angle = (i / bars) * Math.PI * 2 - Math.PI / 2;
       var barLen = innerR + val * (maxR - innerR);
 
@@ -278,7 +311,7 @@
   }
 
   audio.addEventListener('play', function () {
-    try { initAnalyser(); } catch (e) {}
+    initAnalyser();
     if (ctx) drawVisualizer();
   });
 
