@@ -243,6 +243,7 @@
       source.connect(analyser);
       analyser.connect(audioCtx.destination);
       freqData = new Uint8Array(analyser.frequencyBinCount);
+      if (audioCtx.state === 'suspended') audioCtx.resume();
     } catch (e) {
       useSimulated = true;
       corsCheckDone = true;
