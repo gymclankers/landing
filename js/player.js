@@ -33,6 +33,13 @@
   var progressWrap = document.getElementById('progress-wrap');
   var progressFill = document.getElementById('progress-fill');
   var progressHandle = document.getElementById('progress-handle');
+  var progressRobot = document.getElementById('progress-robot');
+
+  function setProgress(pct) {
+    progressFill.style.width = pct;
+    progressHandle.style.left = pct;
+    progressRobot.style.left = pct;
+  }
 
   function formatTime(s) {
     if (!s || isNaN(s)) return '0:00';
@@ -47,8 +54,7 @@
     audio.load();
     trackName.textContent = tracks[current].name;
     trackTime.textContent = '0:00';
-    progressFill.style.width = '0%';
-    progressHandle.style.left = '0%';
+    setProgress('0%');
     if (autoplay) {
       audio.play();
     }
@@ -74,7 +80,7 @@
   }
 
   // Play / pause
-  playBtn.addEventListener('click', function () {
+  function handlePlayPause() {
     var wasPlaying = !audio.paused;
     togglePlay();
     if (typeof gtag === 'function') {
@@ -82,7 +88,19 @@
         track: tracks[current].name
       });
     }
-  });
+  }
+
+  playBtn.addEventListener('click', handlePlayPause);
+
+  // Hero play button
+  var heroPlay = document.getElementById('hero-play');
+  if (heroPlay) {
+    heroPlay.addEventListener('click', function () {
+      handlePlayPause();
+      // Reveal player bar immediately if not already visible
+      bar.classList.add('visible');
+    });
+  }
 
   // Previous — restart if >3s in, else go to previous track
   prevBtn.addEventListener('click', function () {
@@ -107,8 +125,7 @@
   audio.addEventListener('timeupdate', function () {
     if (!audio.duration) return;
     var pct = (audio.currentTime / audio.duration) * 100;
-    progressFill.style.width = pct + '%';
-    progressHandle.style.left = pct + '%';
+    setProgress(pct + '%');
     trackTime.textContent = formatTime(audio.currentTime);
   });
 
@@ -122,8 +139,7 @@
     var rect = progressWrap.getBoundingClientRect();
     var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
     var pct = Math.max(0, Math.min(1, x / rect.width));
-    progressFill.style.width = (pct * 100) + '%';
-    progressHandle.style.left = (pct * 100) + '%';
+    setProgress((pct * 100) + '%');
     if (audio.duration) {
       audio.currentTime = pct * audio.duration;
     }

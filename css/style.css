@@ -197,6 +197,39 @@ body {
   animation: fadeIn 1s ease 4.2s forwards;
 }
 
+/* Hero play button */
+.hero-play {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 4.4s forwards;
+}
+
+.hero-play svg {
+  width: 32px;
+  height: 32px;
+  color: var(--accent);
+  margin-left: 4px; /* optical center for play triangle */
+}
+
+.hero-play:hover {
+  background: var(--accent);
+  box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(186, 37, 37, 0.15);
+  transform: scale(1.08);
+}
+
+.hero-play:hover svg {
+  color: #000;
+}
+
 /* Buttons */
 .buttons {
   display: flex;
@@ -395,6 +428,36 @@ body {
   filter: drop-shadow(0 0 6px var(--accent-glow));
 }
 
+/* Discord CTA */
+.discord-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  opacity: 0;
+  animation: fadeIn 0.8s ease 5s forwards;
+}
+
+.discord-cta svg {
+  width: 18px;
+  height: 18px;
+}
+
+.discord-cta:hover {
+  color: var(--accent);
+  border-color: var(--accent-dim);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
 /* Shared fade-in */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -440,46 +503,95 @@ body {
   transform: translateY(0);
 }
 
-/* Progress scrubber — full-width at top of footer */
+/* Progress — full-height behind controls */
 .progress-wrap {
-  position: relative;
-  width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.08);
+  position: absolute;
+  inset: 0;
   cursor: pointer;
-  transition: height 0.15s ease;
-}
-
-.progress-wrap:hover {
-  height: 6px;
+  z-index: 0;
 }
 
 .progress-fill {
-  height: 100%;
-  background: var(--accent);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 0%;
+  background: rgba(186, 37, 37, 0.12);
   transition: none;
 }
 
+/* Playhead — vertical line */
 .progress-handle {
   position: absolute;
-  top: 50%;
+  top: 0;
+  bottom: 0;
   left: 0%;
-  width: 12px;
-  height: 12px;
+  width: 2px;
   background: var(--accent);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.15s ease;
+  transform: translateX(-50%);
   pointer-events: none;
+  opacity: 0.6;
 }
 
-.progress-wrap:hover .progress-handle {
-  transform: translate(-50%, -50%) scale(1);
+.player-bar.playing .progress-handle {
+  opacity: 1;
+}
+
+/* Playhead pulse — top to bottom sweep */
+.progress-handle::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 4px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--accent), 0 0 16px var(--accent-glow);
+  opacity: 0;
+}
+
+.player-bar.playing .progress-handle::after {
+  animation: playheadPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes playheadPulse {
+  0% { top: -4px; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: calc(100% - 4px); opacity: 0; }
+}
+
+/* Robot runner at playhead */
+.progress-robot {
+  position: absolute;
+  top: -18px;
+  left: 0%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: drop-shadow(0 0 3px var(--accent-glow));
+}
+
+.player-bar.playing .progress-robot {
+  opacity: 0.7;
+  animation: robotRun 0.4s steps(2) infinite;
+}
+
+@keyframes robotRun {
+  0% { transform: translateX(-50%) translateY(0) rotate(-3deg); }
+  50% { transform: translateX(-50%) translateY(-2px) rotate(3deg); }
+  100% { transform: translateX(-50%) translateY(0) rotate(-3deg); }
 }
 
 /* Controls row */
 .player-controls {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.5rem;
