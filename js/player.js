@@ -273,4 +273,167 @@
   audio.addEventListener('pause', function () {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
   });
+
+  // ─── Tracklist ───
+  var tracklistEl = document.getElementById('tracklist-list');
+
+  function renderTracklist() {
+    if (!tracklistEl) return;
+    tracklistEl.innerHTML = '';
+    tracks.forEach(function (t, i) {
+      var row = document.createElement('div');
+      row.className = 'tracklist-row' + (i === current ? ' active' : '');
+      row.innerHTML = '<span class="tracklist-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="tracklist-name">' + t.name + '</span>';
+      row.addEventListener('click', function () {
+        loadTrack(i, true);
+        bar.classList.add('visible');
+        if (typeof gtag === 'function') {
+          gtag('event', 'click_track', { track: t.name, index: i });
+        }
+      });
+      tracklistEl.appendChild(row);
+    });
+  }
+
+  function updateTracklist() {
+    if (!tracklistEl) return;
+    var rows = tracklistEl.querySelectorAll('.tracklist-row');
+    rows.forEach(function (row, i) {
+      row.classList.toggle('active', i === current);
+    });
+  }
+
+  renderTracklist();
+
+  // Patch loadTrack to also update tracklist + mobile UI
+  var _origLoadTrack = loadTrack;
+  loadTrack = function (index, autoplay) {
+    _origLoadTrack(index, autoplay);
+    updateTracklist();
+    syncMobileUI();
+  };
+
+  // ─── Mobile player card ───
+  var mpcPlay = document.getElementById('mpc-play');
+  var mpcPrev = document.getElementById('mpc-prev');
+  var mpcNext = document.getElementById('mpc-next');
+  var mpcName = document.getElementById('mpc-name');
+  var mpcTime = document.getElementById('mpc-time');
+  var mpcProgressWrap = document.getElementById('mpc-progress');
+  var mpcFill = document.getElementById('mpc-progress-fill');
+  var mpcThumb = document.getElementById('mpc-progress-thumb');
+  var mpcPlayIcon = mpcPlay ? mpcPlay.querySelector('.mpc-play-icon') : null;
+  var mpcPauseIcon = mpcPlay ? mpcPlay.querySelector('.mpc-pause-icon') : null;
+
+  if (mpcPlay) {
+    mpcPlay.addEventListener('click', function () {
+      handlePlayPause();
+      bar.classList.add('visible');
+    });
+  }
+  if (mpcPrev) {
+    mpcPrev.addEventListener('click', function () {
+      if (audio.currentTime > 3) {
+        audio.currentTime = 0;
+      } else {
+        loadTrack((current - 1 + tracks.length) % tracks.length, !audio.paused);
+      }
+    });
+  }
+  if (mpcNext) {
+    mpcNext.addEventListener('click', function () {
+      loadTrack((current + 1) % tracks.length, !audio.paused);
+    });
+  }
+
+  // Mobile card scrubbing
+  var mpcScrubbing = false;
+  function mpcScrub(e) {
+    if (!mpcProgressWrap) return;
+    var rect = mpcProgressWrap.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    var pct = Math.max(0, Math.min(1, x / rect.width));
+    if (mpcFill) mpcFill.style.width = (pct * 100) + '%';
+    if (mpcThumb) mpcThumb.style.left = (pct * 100) + '%';
+    if (audio.duration) audio.currentTime = pct * audio.duration;
+  }
+
+  if (mpcProgressWrap) {
+    mpcProgressWrap.addEventListener('mousedown', function (e) { mpcScrubbing = true; mpcScrub(e); });
+    mpcProgressWrap.addEventListener('touchstart', function (e) { mpcScrubbing = true; mpcScrub(e); }, { passive: true });
+  }
+  document.addEventListener('mousemove', function (e) { if (mpcScrubbing) mpcScrub(e); });
+  document.addEventListener('touchmove', function (e) { if (mpcScrubbing) mpcScrub(e); }, { passive: true });
+  document.addEventListener('mouseup', function () { mpcScrubbing = false; });
+  document.addEventListener('touchend', function () { mpcScrubbing = false; });
+
+  // ─── Mini-bar ───
+  var miniBar = document.getElementById('mini-bar');
+  var miniBarPlay = document.getElementById('mini-bar-play');
+  var miniBarName = document.getElementById('mini-bar-name');
+  var miniBarFill = document.getElementById('mini-bar-fill');
+  var miniBarTime = document.getElementById('mini-bar-time');
+  var miniPlayIcon = miniBarPlay ? miniBarPlay.querySelector('.mini-play-icon') : null;
+  var miniPauseIcon = miniBarPlay ? miniBarPlay.querySelector('.mini-pause-icon') : null;
+  var mobileCard = document.getElementById('mobile-player-card');
+
+  if (miniBarPlay) {
+    miniBarPlay.addEventListener('click', function (e) {
+      e.stopPropagation();
+      handlePlayPause();
+    });
+  }
+  if (miniBar) {
+    miniBar.addEventListener('click', function () {
+      // Scroll back to hero
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // IntersectionObserver: show mini-bar when mobile card scrolls out
+  if (mobileCard && miniBar) {
+    var observer = new IntersectionObserver(function (entries) {
+      var isMobile = window.innerWidth <= 767;
+      if (!isMobile) { miniBar.classList.remove('visible'); return; }
+      entries.forEach(function (entry) {
+        miniBar.classList.toggle('visible', !entry.isIntersecting);
+      });
+    }, { threshold: 0 });
+    observer.observe(mobileCard);
+  }
+
+  // ─── Sync all mobile UI ───
+  function syncMobileUI() {
+    var name = tracks[current].name;
+    if (mpcName) mpcName.textContent = name;
+    if (miniBarName) miniBarName.textContent = name;
+  }
+
+  function syncMobilePlayState() {
+    var playing = !audio.paused;
+    if (mpcPlayIcon) mpcPlayIcon.style.display = playing ? 'none' : '';
+    if (mpcPauseIcon) mpcPauseIcon.style.display = playing ? '' : 'none';
+    if (miniPlayIcon) miniPlayIcon.style.display = playing ? 'none' : '';
+    if (miniPauseIcon) miniPauseIcon.style.display = playing ? '' : 'none';
+  }
+
+  audio.addEventListener('play', syncMobilePlayState);
+  audio.addEventListener('pause', syncMobilePlayState);
+
+  audio.addEventListener('timeupdate', function () {
+    if (!audio.duration) return;
+    var pct = (audio.currentTime / audio.duration) * 100;
+    var timeStr = formatTime(audio.currentTime);
+    // Mobile card
+    if (mpcFill && !mpcScrubbing) mpcFill.style.width = pct + '%';
+    if (mpcThumb && !mpcScrubbing) mpcThumb.style.left = pct + '%';
+    if (mpcTime) mpcTime.textContent = timeStr;
+    // Mini-bar
+    if (miniBarFill) miniBarFill.style.width = pct + '%';
+    if (miniBarTime) miniBarTime.textContent = timeStr;
+  });
+
+  // Initial sync
+  syncMobileUI();
 })();

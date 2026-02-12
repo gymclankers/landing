@@ -260,9 +260,7 @@ body {
 }
 
 .buttons .btn {
-  flex: 1;
-  min-width: 140px;
-  max-width: 200px;
+  min-width: 220px;
 }
 
 .btn {
@@ -345,28 +343,31 @@ body {
   transform: translateY(-1px);
 }
 
-/* Music button — note triplet + electric pulse */
-.btn-music {
+/* Spotify CTA — electric spin on hover */
+.btn-spotify {
   position: relative;
-  gap: 0.3rem;
+  gap: 0.5rem;
   overflow: hidden;
+  font-size: 0.9rem;
+  padding: 0.85rem 2.5rem;
 }
 
-.btn-music .note {
-  font-size: 1.1rem;
-  color: #000;
+.btn-spotify-icon {
+  width: 18px;
+  height: 18px;
   position: relative;
   z-index: 1;
-  transition: text-shadow 0.3s ease;
+  flex-shrink: 0;
 }
 
-.btn-music .note-mid {
-  transform: translateY(-3px);
-  display: inline-block;
+.btn-spotify span,
+.btn-spotify {
+  position: relative;
+  z-index: 1;
 }
 
 /* Rotating electric charge — two bright sparks circling the border */
-.btn-music::before {
+.btn-spotify::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -389,34 +390,32 @@ body {
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 0;
 }
 
 /* Inner fill covers center — rotating gradient only visible at 2px border edge */
-.btn-music::after {
+.btn-spotify::after {
   content: '';
   position: absolute;
   inset: 2px;
   background: var(--accent);
   border-radius: 4px;
   transition: background 0.2s ease;
+  z-index: 0;
 }
 
-.btn-music:hover {
+.btn-spotify:hover {
   transform: none;
   box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(186, 37, 37, 0.1);
 }
 
-.btn-music:hover::before {
+.btn-spotify:hover::before {
   opacity: 1;
   animation: electricSpin 2s linear infinite;
 }
 
-.btn-music:hover::after {
+.btn-spotify:hover::after {
   background: #D03333;
-}
-
-.btn-music:hover .note {
-  text-shadow: 0 0 6px var(--accent-glow);
 }
 
 @keyframes electricSpin {
@@ -484,8 +483,130 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Mobile */
-@media (max-width: 600px) {
+/* ─── Tracklist ─── */
+.tracklist {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.tracklist-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(186, 37, 37, 0.15);
+}
+
+.tracklist-album {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text);
+}
+
+.tracklist-count {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.tracklist-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.tracklist-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.tracklist-row:hover {
+  background: rgba(186, 37, 37, 0.08);
+  color: var(--text);
+}
+
+.tracklist-row.active {
+  color: var(--accent);
+  background: rgba(186, 37, 37, 0.1);
+}
+
+.tracklist-num {
+  width: 1.5rem;
+  text-align: right;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.tracklist-row.active .tracklist-num {
+  opacity: 1;
+}
+
+.tracklist-name {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tracklist-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.site-sig {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: #444;
+}
+
+/* ─── Mobile-only elements: hidden by default ─── */
+.mobile-player-card,
+.scroll-hint,
+.mobile-socials,
+.mini-bar {
+  display: none;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 767px) {
+  /* Hero becomes scrollable, not full-viewport-locked */
+  .hero {
+    min-height: 100dvh;
+    justify-content: flex-start;
+    padding: 3rem 1.5rem 2rem;
+    padding-top: max(3rem, env(safe-area-inset-top, 0px));
+    gap: 1.2rem;
+  }
+
+  .logo {
+    width: 80px;
+    height: 80px;
+  }
+
   .wordmark-container {
     width: 95%;
   }
@@ -495,7 +616,6 @@ body {
   }
 
   .buttons {
-    flex-direction: column;
     width: 100%;
     max-width: 280px;
   }
@@ -505,13 +625,334 @@ body {
     justify-content: center;
   }
 
-  /* Disable wordmark flicker on mobile */
+  /* Disable wordmark flicker + sparks on mobile */
   .wordmark-trace {
     animation: trace 3s ease-in-out 1s forwards;
   }
+  .spark { display: none; }
 
-  .spark {
-    display: none;
+  /* Hide desktop elements on mobile */
+  .hero-play { display: none !important; }
+  .player-bar { display: none !important; }
+  .socials { display: none !important; }
+  .community-cta { display: none !important; }
+
+  /* ─── Mobile player card ─── */
+  .mobile-player-card {
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 1rem);
+    max-width: 360px;
+    background: rgba(10, 10, 10, 0.9);
+    border-top: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    gap: 0.6rem;
+    margin-top: auto;
+  }
+
+  .mpc-top {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .mpc-play {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mpc-play svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .mpc-name {
+    flex: 1;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mpc-time {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Progress bar — thick, thumb-friendly */
+  .mpc-progress {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    touch-action: none;
+    /* Expand hit area */
+    padding: 10px 0;
+    margin: -10px 0;
+    background-clip: content-box;
+  }
+
+  .mpc-progress-fill {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    height: 6px;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+
+  .mpc-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    box-shadow: 0 0 6px var(--accent-glow);
+  }
+
+  /* Controls row */
+  .mpc-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+
+  .mpc-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mpc-btn:active {
+    color: var(--text);
+  }
+
+  .mpc-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* ─── Scroll hint ─── */
+  .scroll-hint {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0;
+    color: var(--text-muted);
+    opacity: 0.4;
+    animation: scrollBounce 2s ease-in-out infinite;
+  }
+
+  .scroll-hint svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @keyframes scrollBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  /* ─── Tracklist mobile ─── */
+  .tracklist {
+    padding: 2rem 1rem 2rem;
+  }
+
+  .tracklist-row {
+    padding: 0.85rem 0.75rem;
+    min-height: 56px;
+    font-size: 0.9rem;
+  }
+
+  /* ─── Mobile socials ─── */
+  .mobile-socials {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1.5rem 3rem;
+  }
+
+  .ms-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .ms-label {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+  }
+
+  .ms-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .ms-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 99px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ms-pill:active {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .ms-pill svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .ms-pill-sm svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .mobile-socials .site-sig {
+    margin-top: 0.5rem;
+  }
+
+  /* ─── Mini-bar ─── */
+  .mini-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: 48px;
+    background: rgba(10, 10, 10, 0.95);
+    border-top: 1px solid rgba(186, 37, 37, 0.25);
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.75rem;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    cursor: pointer;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mini-bar.visible {
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .mini-bar-play {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mini-bar-play svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mini-bar-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    max-width: 100px;
+  }
+
+  .mini-bar-progress {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .mini-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .mini-bar-time {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Landscape safeguard */
+  @media (orientation: landscape) {
+    .hero {
+      min-height: max(100dvh, 500px);
+    }
   }
 }
 
@@ -793,15 +1234,3 @@ body {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Mobile player bar */
-@media (max-width: 600px) {
-  .player-controls {
-    padding: 0.3rem 0.5rem;
-    gap: 0.25rem;
-  }
-
-  .play-btn {
-    width: 36px;
-    height: 36px;
-  }
-}
