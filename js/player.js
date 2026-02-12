@@ -44,6 +44,7 @@
   function loadTrack(index, autoplay) {
     current = index;
     audio.src = BASE + tracks[current].file;
+    audio.load();
     trackName.textContent = tracks[current].name;
     trackTime.textContent = '0:00';
     progressFill.style.width = '0%';
