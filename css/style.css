@@ -41,7 +41,7 @@ body {
   transition: filter 0.8s ease, transform 0.8s ease;
 }
 .bg-overlay.loaded {
-  background-image: url('/img/banner_01.png');
+  background-image: url('/img/banner_01.webp');
   filter: blur(0);
   transform: scale(1);
 }
