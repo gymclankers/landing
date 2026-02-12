@@ -2,9 +2,9 @@
 
 :root {
   --bg: #050505;
-  --accent: #C23838;
-  --accent-dim: #8B2020;
-  --accent-glow: rgba(194, 56, 56, 0.3);
+  --accent: #D13636;
+  --accent-dim: #961E1E;
+  --accent-glow: rgba(209, 54, 54, 0.3);
   --text: #e5e5e5;
   --text-muted: #888;
   --surface: rgba(20, 20, 20, 0.85);
@@ -41,7 +41,7 @@ body {
   transition: filter 0.8s ease, transform 0.8s ease;
 }
 .bg-overlay.loaded {
-  background-image: url('/img/bg.png');
+  background-image: url('/img/banner_01.png');
   filter: blur(0);
   transform: scale(1);
 }
@@ -231,7 +231,6 @@ body {
   font-weight: 500;
   color: var(--text-muted);
   letter-spacing: 0.15em;
-  text-transform: lowercase;
   opacity: 0;
   animation: fadeIn 1s ease 4.2s forwards;
 }
@@ -267,8 +266,8 @@ body {
 }
 
 .btn-primary:hover {
-  background: #D94545;
-  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(194, 56, 56, 0.15);
+  background: #E04A4A;
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(209, 54, 54, 0.15);
   transform: translateY(-1px);
 }
 
@@ -292,13 +291,24 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #555;
+  background: linear-gradient(120deg, #555 0%, #555 35%, #aaa 50%, #555 65%, #555 100%);
+  background-size: 200% 100%;
+  background-position: 200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .btn-disabled:hover::after {
   opacity: 1;
+  animation: shine 2s linear infinite;
+}
+
+@keyframes shine {
+  from { background-position: 200% center; }
+  to { background-position: -200% center; }
 }
 
 .btn-secondary {
@@ -313,17 +323,13 @@ body {
   transform: translateY(-1px);
 }
 
-/* Music button — note triplet + glass shatter */
+/* Music button — note triplet */
 .btn-music {
-  position: relative;
-  overflow: visible;
   gap: 0.3rem;
 }
 
 .btn-music .note {
   font-size: 1.1rem;
-  position: relative;
-  z-index: 1;
   color: #000;
   transition: color 0.25s ease;
 }
@@ -332,87 +338,6 @@ body {
   transform: translateY(-3px);
   display: inline-block;
 }
-
-/* Glass shards — asymmetric radial fracture, impact at (42%,38%) */
-.shard {
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  opacity: 0;
-  pointer-events: none;
-  border-radius: 6px;
-  transition-property: transform, opacity;
-  transition-duration: 350ms, 0s;
-  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1), linear;
-  transition-delay: 0ms, 0ms;
-}
-
-/* Center shards — irregular triangles from off-center impact */
-.shard-0  { clip-path: polygon(42% 38%, 38% 22%, 54% 24%); }
-.shard-1  { clip-path: polygon(42% 38%, 54% 24%, 62% 32%); }
-.shard-2  { clip-path: polygon(42% 38%, 62% 32%, 60% 48%); }
-.shard-3  { clip-path: polygon(42% 38%, 60% 48%, 56% 60%); }
-.shard-4  { clip-path: polygon(42% 38%, 56% 60%, 46% 62%); }
-.shard-5  { clip-path: polygon(42% 38%, 46% 62%, 34% 58%); }
-.shard-6  { clip-path: polygon(42% 38%, 34% 58%, 28% 50%); }
-.shard-7  { clip-path: polygon(42% 38%, 28% 50%, 27% 40%); }
-.shard-8  { clip-path: polygon(42% 38%, 27% 40%, 32% 26%); }
-.shard-9  { clip-path: polygon(42% 38%, 32% 26%, 38% 22%); }
-
-/* Outer shards — larger irregular pieces to button edges */
-.shard-10 { clip-path: polygon(38% 22%, 54% 24%, 72% 0%, 28% 0%); }
-.shard-11 { clip-path: polygon(54% 24%, 62% 32%, 100% 20%, 100% 0%, 72% 0%); }
-.shard-12 { clip-path: polygon(62% 32%, 60% 48%, 100% 62%, 100% 20%); }
-.shard-13 { clip-path: polygon(60% 48%, 56% 60%, 88% 100%, 100% 100%, 100% 62%); }
-.shard-14 { clip-path: polygon(56% 60%, 46% 62%, 52% 100%, 88% 100%); }
-.shard-15 { clip-path: polygon(46% 62%, 34% 58%, 22% 100%, 52% 100%); }
-.shard-16 { clip-path: polygon(34% 58%, 28% 50%, 0% 75%, 0% 100%, 22% 100%); }
-.shard-17 { clip-path: polygon(28% 50%, 27% 40%, 0% 45%, 0% 75%); }
-.shard-18 { clip-path: polygon(27% 40%, 32% 26%, 0% 15%, 0% 45%); }
-.shard-19 { clip-path: polygon(32% 26%, 38% 22%, 28% 0%, 0% 0%, 0% 15%); }
-
-/* Stage 2 — center far side */
-.shard-3, .shard-4, .shard-5, .shard-6, .shard-7 { transition-delay: 50ms, 0ms; }
-/* Stage 3 — outer sides */
-.shard-10, .shard-12, .shard-14, .shard-15, .shard-17, .shard-18 { transition-delay: 110ms, 0ms; }
-/* Stage 4 — outer corners */
-.shard-11, .shard-13, .shard-16, .shard-19 { transition-delay: 170ms, 0ms; }
-
-.btn-music:hover {
-  background: transparent;
-  box-shadow: none;
-  transform: none;
-}
-
-.btn-music:hover .note {
-  color: var(--accent);
-}
-
-.btn-music:hover .shard { opacity: 1; }
-
-/* Center — asymmetric radial displacement */
-.btn-music:hover .shard-0  { transform: translate(-1px, -14px) rotate(-6deg); }
-.btn-music:hover .shard-1  { transform: translate(9px, -11px) rotate(4deg); }
-.btn-music:hover .shard-2  { transform: translate(14px, 3px) rotate(7deg); }
-.btn-music:hover .shard-3  { transform: translate(11px, 10px) rotate(-5deg); }
-.btn-music:hover .shard-4  { transform: translate(5px, 16px) rotate(6deg); }
-.btn-music:hover .shard-5  { transform: translate(-4px, 13px) rotate(-3deg); }
-.btn-music:hover .shard-6  { transform: translate(-10px, 7px) rotate(-7deg); }
-.btn-music:hover .shard-7  { transform: translate(-13px, -1px) rotate(5deg); }
-.btn-music:hover .shard-8  { transform: translate(-11px, -8px) rotate(-5deg); }
-.btn-music:hover .shard-9  { transform: translate(-7px, -11px) rotate(3deg); }
-
-/* Outer — longer flight, varied rotation */
-.btn-music:hover .shard-10 { transform: translate(3px, -28px) rotate(-5deg); }
-.btn-music:hover .shard-11 { transform: translate(26px, -22px) rotate(11deg); }
-.btn-music:hover .shard-12 { transform: translate(28px, 6px) rotate(7deg); }
-.btn-music:hover .shard-13 { transform: translate(24px, 26px) rotate(-12deg); }
-.btn-music:hover .shard-14 { transform: translate(6px, 30px) rotate(5deg); }
-.btn-music:hover .shard-15 { transform: translate(-6px, 26px) rotate(-4deg); }
-.btn-music:hover .shard-16 { transform: translate(-24px, 20px) rotate(-10deg); }
-.btn-music:hover .shard-17 { transform: translate(-28px, 0px) rotate(8deg); }
-.btn-music:hover .shard-18 { transform: translate(-26px, -12px) rotate(-9deg); }
-.btn-music:hover .shard-19 { transform: translate(-22px, -24px) rotate(11deg); }
 
 /* Spotify player */
 .player {
@@ -424,7 +349,7 @@ body {
 
 .player-placeholder {
   background: var(--surface);
-  border: 1px solid rgba(194, 56, 56, 0.15);
+  border: 1px solid rgba(209, 54, 54, 0.15);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -477,7 +402,6 @@ body {
 .social-link:hover {
   color: var(--accent);
   filter: drop-shadow(0 0 6px var(--accent-glow));
-  transform: translateY(-2px);
 }
 
 /* Shared fade-in */
