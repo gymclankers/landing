@@ -56,17 +56,7 @@
     <!-- Logo -->
     <div class="logo">
       <svg viewBox="-8 -10 76 80" class="logo-icon">
-        <!-- Frosted backdrop fill -->
-        <polygon class="hex-backdrop" points="30,-3 58.6,13.5 58.6,46.5 30,63 1.4,46.5 1.4,13.5" fill="rgba(0,0,0,0.08)"/>
-        <!-- Five-part hexagon (point-up, uneven segments, r=33) -->
-        <g class="hex-group">
-          <path class="hex hex-0" d="M 24.3 0.3 L 30 -3 L 45.7 6.1" fill="none" stroke="#D13636" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-1" d="M 48.6 7.7 L 58.6 13.5 L 58.6 46.5 L 48.6 52.3" fill="none" stroke="#D13636" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-2" d="M 44.3 54.8 L 30 63 L 21.4 58.1" fill="none" stroke="#D13636" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-3" d="M 17.1 55.6 L 1.4 46.5 L 1.4 25.0" fill="none" stroke="#D13636" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-4" d="M 1.4 21.8 L 1.4 13.5 L 21.4 2.0" fill="none" stroke="#D13636" stroke-width="2" stroke-linecap="round"/>
-        </g>
-        <!-- Robot arm (from gymclankers.png, scaled to fit) -->
+        <!-- Robot arm with dumbbell -->
         <g transform="translate(5.3, 5.0) scale(0.085)">
           <g class="robot-arm" fill="none" stroke="#D13636" stroke-linecap="round" stroke-linejoin="round">
             <!-- Shoulder -->
@@ -200,7 +190,7 @@
       img.onload = function () {
         document.querySelector('.bg-overlay').classList.add('loaded');
       };
-      img.src = '/img/banner_01.png';
+      img.src = '/img/bg.png';
     })();
   </script>
 </body>
