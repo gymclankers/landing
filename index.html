@@ -22,7 +22,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Text+Me+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/style.css">
 
@@ -56,26 +56,19 @@
     <!-- Logo -->
     <div class="logo">
       <svg viewBox="-8 -10 76 80" class="logo-icon">
-        <defs>
-          <clipPath id="hex-clip">
-            <polygon points="30,-3 58.6,13.5 58.6,46.5 30,63 1.4,46.5 1.4,13.5"/>
-          </clipPath>
-        </defs>
-        <!-- Backdrop blur behind hexagon -->
-        <foreignObject x="1.4" y="-3" width="57.2" height="66" clip-path="url(#hex-clip)">
-          <div xmlns="http://www.w3.org/1999/xhtml" class="hex-blur-fill" style="width:100%;height:100%"></div>
-        </foreignObject>
+        <!-- Frosted backdrop fill -->
+        <polygon class="hex-backdrop" points="30,-3 58.6,13.5 58.6,46.5 30,63 1.4,46.5 1.4,13.5" fill="rgba(0,0,0,0.08)"/>
         <!-- Five-part hexagon (point-up, uneven segments, r=33) -->
         <g class="hex-group">
-          <path class="hex hex-0" d="M 24.3 0.3 L 30 -3 L 45.7 6.1" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-1" d="M 48.6 7.7 L 58.6 13.5 L 58.6 46.5 L 48.6 52.3" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-2" d="M 44.3 54.8 L 30 63 L 21.4 58.1" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-3" d="M 17.1 55.6 L 1.4 46.5 L 1.4 25.0" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
-          <path class="hex hex-4" d="M 1.4 21.8 L 1.4 13.5 L 21.4 2.0" fill="none" stroke="#32CB32" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-0" d="M 24.3 0.3 L 30 -3 L 45.7 6.1" fill="none" stroke="#c2234b" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-1" d="M 48.6 7.7 L 58.6 13.5 L 58.6 46.5 L 48.6 52.3" fill="none" stroke="#c2234b" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-2" d="M 44.3 54.8 L 30 63 L 21.4 58.1" fill="none" stroke="#c2234b" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-3" d="M 17.1 55.6 L 1.4 46.5 L 1.4 25.0" fill="none" stroke="#c2234b" stroke-width="2" stroke-linecap="round"/>
+          <path class="hex hex-4" d="M 1.4 21.8 L 1.4 13.5 L 21.4 2.0" fill="none" stroke="#c2234b" stroke-width="2" stroke-linecap="round"/>
         </g>
         <!-- Robot arm (from gymclankers.png, scaled to fit) -->
         <g transform="translate(5.3, 5.0) scale(0.085)">
-          <g class="robot-arm" fill="none" stroke="#32CB32" stroke-linecap="round" stroke-linejoin="round">
+          <g class="robot-arm" fill="none" stroke="#c2234b" stroke-linecap="round" stroke-linejoin="round">
             <!-- Shoulder -->
             <circle cx="100" cy="240" r="90" stroke-width="13"/>
             <polygon points="120,191.8 148.2,220 148.2,260 120,288.2 80,288.2 51.8,260 51.8,220 80,191.8" stroke-width="13"/>
@@ -134,8 +127,8 @@
         <!-- Glow layer -->
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-glow"
-          font-family="'Text Me One', sans-serif" font-size="130"
-          fill="none" stroke="#32CB32" stroke-width="3"
+          font-family="'Annie Use Your Telescope', cursive" font-size="130"
+          fill="none" stroke="#c2234b" stroke-width="3"
           filter="url(#glow-strong)">
           GYMCLANKERS
         </text>
@@ -143,8 +136,8 @@
         <!-- Trace layer -->
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-trace"
-          font-family="'Text Me One', sans-serif" font-size="130"
-          fill="none" stroke="#32CB32" stroke-width="2"
+          font-family="'Annie Use Your Telescope', cursive" font-size="130"
+          fill="none" stroke="#c2234b" stroke-width="2"
           filter="url(#glow)">
           GYMCLANKERS
         </text>
@@ -152,8 +145,8 @@
         <!-- Fill layer (split into letters for flicker) -->
         <text x="450" y="115" text-anchor="middle"
           class="wordmark-fill"
-          font-family="'Text Me One', sans-serif" font-size="130"
-          fill="#32CB32" opacity="0"><tspan class="letter">G</tspan><tspan class="letter">Y</tspan><tspan class="letter">M</tspan><tspan class="letter">C</tspan><tspan class="letter">L</tspan><tspan class="letter">A</tspan><tspan class="letter">N</tspan><tspan class="letter">K</tspan><tspan class="letter">E</tspan><tspan class="letter">R</tspan><tspan class="letter">S</tspan></text>
+          font-family="'Annie Use Your Telescope', cursive" font-size="130"
+          fill="#c2234b" opacity="0"><tspan class="letter">G</tspan><tspan class="letter">Y</tspan><tspan class="letter">M</tspan><tspan class="letter">C</tspan><tspan class="letter">L</tspan><tspan class="letter">A</tspan><tspan class="letter">N</tspan><tspan class="letter">K</tspan><tspan class="letter">E</tspan><tspan class="letter">R</tspan><tspan class="letter">S</tspan></text>
       </svg>
     </div>
 
@@ -162,7 +155,7 @@
 
     <!-- Buttons -->
     <div class="buttons">
-      <a href="https://open.spotify.com/artist/2WOME06M2SCNzwbFfsFkLO" class="btn btn-primary btn-music"><span class="note">&#9833;</span><span class="note note-mid">&#9834;</span><span class="note">&#9835;</span><span class="shard shard-0"></span><span class="shard shard-1"></span><span class="shard shard-2"></span><span class="shard shard-3"></span><span class="shard shard-4"></span></a>
+      <a href="https://open.spotify.com/artist/2WOME06M2SCNzwbFfsFkLO" class="btn btn-primary btn-music"><span class="note">&#9833;</span><span class="note note-mid">&#9834;</span><span class="note">&#9835;</span><span class="shard shard-0"></span><span class="shard shard-1"></span><span class="shard shard-2"></span><span class="shard shard-3"></span><span class="shard shard-4"></span><span class="shard shard-5"></span><span class="shard shard-6"></span><span class="shard shard-7"></span><span class="shard shard-8"></span><span class="shard shard-9"></span><span class="shard shard-10"></span><span class="shard shard-11"></span><span class="shard shard-12"></span><span class="shard shard-13"></span><span class="shard shard-14"></span><span class="shard shard-15"></span><span class="shard shard-16"></span><span class="shard shard-17"></span><span class="shard shard-18"></span><span class="shard shard-19"></span></a>
       <span class="btn btn-disabled">Co-Create</span>
     </div>
 
