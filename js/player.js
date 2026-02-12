@@ -240,13 +240,15 @@
 
     var w = canvas.width;
     var h = canvas.height;
-    var cy = h / 2;
-    var bars = 9;
-    var gap = 2;
-    var barW = 3;
+    var bars = 7;
+    var cubeH = 4;       // height of each cube segment
+    var cubeGap = 1.5;   // vertical gap between cubes
+    var barW = 5;
+    var gap = 3;
     var totalW = bars * barW + (bars - 1) * gap;
     var startX = (w - totalW) / 2;
-    var maxH = h * 0.7;
+    var floor = h - 4;   // flat bottom baseline
+    var maxCubes = 8;
     var t = (ts || 0) * 0.001;
 
     ctx.clearRect(0, 0, w, h);
@@ -255,12 +257,16 @@
       var val = 0.25 + 0.3 * Math.sin(t * 3.2 + i * 1.1)
                      + 0.2 * Math.sin(t * 5.4 + i * 0.7)
                      + 0.15 * Math.sin(t * 1.8 + i * 2.3);
-      val = Math.max(0.12, Math.min(1, val));
-      var barH = val * maxH;
+      val = Math.max(0.1, Math.min(1, val));
+      var numCubes = Math.max(1, Math.round(val * maxCubes));
       var x = startX + i * (barW + gap);
 
-      ctx.fillStyle = 'rgba(186, 37, 37, ' + (0.45 + val * 0.55) + ')';
-      ctx.fillRect(x, cy - barH / 2, barW, barH);
+      for (var j = 0; j < numCubes; j++) {
+        var y = floor - j * (cubeH + cubeGap) - cubeH;
+        var brightness = 0.35 + (j / maxCubes) * 0.65;
+        ctx.fillStyle = 'rgba(186, 37, 37, ' + brightness + ')';
+        ctx.fillRect(x, y, barW, cubeH);
+      }
     }
 
     animId = requestAnimationFrame(drawVisualizer);
