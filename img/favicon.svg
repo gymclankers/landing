@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="8" fill="#050505"/>
-  <g transform="translate(5, 2) scale(0.095)" fill="none" stroke="#D13636" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(5, 2) scale(0.095)" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="100" cy="240" r="90" stroke-width="13"/>
     <polygon points="120,191.8 148.2,220 148.2,260 120,288.2 80,288.2 51.8,260 51.8,220 80,191.8" stroke-width="13"/>
     <circle cx="375" cy="450" r="54" stroke-width="11"/>
