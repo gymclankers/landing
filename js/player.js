@@ -30,6 +30,10 @@
   var pauseIcon = playBtn.querySelector('.pause-icon');
   var trackName = document.getElementById('track-name');
   var trackTime = document.getElementById('track-time');
+  var trackDuration = document.getElementById('track-duration');
+  var volumeBtn = document.getElementById('volume-btn');
+  var volOn = volumeBtn.querySelector('.vol-on');
+  var volOff = volumeBtn.querySelector('.vol-off');
   var progressWrap = document.getElementById('progress-wrap');
   var progressFill = document.getElementById('progress-fill');
   var progressHandle = document.getElementById('progress-handle');
@@ -54,6 +58,7 @@
     audio.load();
     trackName.textContent = tracks[current].name;
     trackTime.textContent = '0:00';
+    trackDuration.textContent = '';
     setProgress('0%');
     if (autoplay) {
       audio.play();
@@ -77,6 +82,11 @@
     playIcon.style.display = playing ? 'none' : '';
     pauseIcon.style.display = playing ? '' : 'none';
     bar.classList.toggle('playing', playing);
+    // Hero button waveform state
+    if (heroPlay) {
+      heroPlay.classList.toggle('active', playing || heroPlay.classList.contains('active'));
+      heroPlay.classList.toggle('paused', !playing);
+    }
   }
 
   // Play / pause
@@ -131,6 +141,25 @@
 
   audio.addEventListener('play', updatePlayState);
   audio.addEventListener('pause', updatePlayState);
+
+  // Duration display
+  audio.addEventListener('loadedmetadata', function () {
+    trackDuration.textContent = formatTime(audio.duration);
+  });
+
+  // Volume / mute
+  var savedVolume = 1;
+  volumeBtn.addEventListener('click', function () {
+    if (audio.muted) {
+      audio.muted = false;
+      audio.volume = savedVolume;
+    } else {
+      savedVolume = audio.volume || 1;
+      audio.muted = true;
+    }
+    volOn.style.display = audio.muted ? 'none' : '';
+    volOff.style.display = audio.muted ? '' : 'none';
+  });
 
   // Scrubbing — mouse + touch
   var scrubbing = false;
