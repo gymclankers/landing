@@ -260,7 +260,9 @@ body {
 }
 
 .buttons .btn {
+  flex: 1;
   min-width: 140px;
+  max-width: 200px;
 }
 
 .btn {
@@ -458,6 +460,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 1rem;
+  margin-top: 1.5rem;
   opacity: 0;
   animation: fadeIn 0.8s ease 5s forwards;
 }
@@ -533,23 +536,8 @@ body {
 .progress-wrap {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Scrub hitbox — thin strip at top of player bar */
-.progress-scrub {
-  position: absolute;
-  top: -4px;
-  left: 0;
-  right: 0;
-  height: 12px;
   cursor: pointer;
-  z-index: 3;
-}
-
-.progress-scrub:hover + .progress-wrap .progress-handle {
-  width: 3px;
+  z-index: 2;
 }
 
 .progress-fill {
@@ -560,6 +548,7 @@ body {
   width: 0%;
   background: rgba(186, 37, 37, 0.33);
   transition: none;
+  pointer-events: none;
 }
 
 /* Playhead — vertical line */
@@ -604,22 +593,29 @@ body {
   100% { top: calc(100% - 4px); opacity: 0; }
 }
 
-/* Robot runner at playhead */
+/* Robot runner — draggable scrubber */
 .progress-robot {
   position: absolute;
-  top: -18px;
+  top: -20px;
   left: 0%;
   transform: translateX(-50%);
-  width: 16px;
-  height: 16px;
-  pointer-events: none;
-  opacity: 0;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  pointer-events: auto;
+  cursor: grab;
+  opacity: 0.5;
   transition: opacity 0.3s ease;
   filter: drop-shadow(0 0 3px var(--accent-glow));
+  z-index: 4;
+}
+
+.progress-robot:active {
+  cursor: grabbing;
 }
 
 .player-bar.playing .progress-robot {
-  opacity: 0.7;
+  opacity: 0.8;
   animation: robotRun 0.4s steps(2) infinite;
 }
 
@@ -632,7 +628,7 @@ body {
 /* Controls row */
 .player-controls {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -774,6 +770,7 @@ body {
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
+  margin-top: -3.5px;
 }
 
 .volume-slider::-moz-range-thumb {

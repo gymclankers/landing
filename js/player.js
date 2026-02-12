@@ -36,7 +36,6 @@
   var volOff = volumeBtn.querySelector('.vol-off');
   var volumeSlider = document.getElementById('volume-slider');
   var progressWrap = document.getElementById('progress-wrap');
-  var progressScrub = document.getElementById('progress-scrub');
   var progressFill = document.getElementById('progress-fill');
   var progressHandle = document.getElementById('progress-handle');
   var progressRobot = document.getElementById('progress-robot');
@@ -190,9 +189,16 @@
     }
   }
 
-  progressScrub.addEventListener('mousedown', function (e) {
+  // Click on progress bar to seek
+  progressWrap.addEventListener('mousedown', function (e) {
     scrubbing = true;
     scrub(e);
+  });
+
+  // Drag from robot to scrub
+  progressRobot.addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    scrubbing = true;
   });
   document.addEventListener('mousemove', function (e) {
     if (scrubbing) scrub(e);
@@ -201,14 +207,18 @@
     scrubbing = false;
   });
 
-  progressScrub.addEventListener('touchstart', function (e) {
+  // Touch: robot drag + bar tap
+  progressRobot.addEventListener('touchstart', function (e) {
+    scrubbing = true;
+  }, { passive: true });
+  progressWrap.addEventListener('touchstart', function (e) {
     scrubbing = true;
     scrub(e);
   }, { passive: true });
-  progressScrub.addEventListener('touchmove', function (e) {
+  document.addEventListener('touchmove', function (e) {
     if (scrubbing) scrub(e);
   }, { passive: true });
-  progressScrub.addEventListener('touchend', function () {
+  document.addEventListener('touchend', function () {
     scrubbing = false;
   });
 
@@ -230,35 +240,27 @@
 
     var w = canvas.width;
     var h = canvas.height;
-    var cx = w / 2;
     var cy = h / 2;
-    var bars = 24;
-    var innerR = 12;
-    var maxR = 28;
+    var bars = 9;
+    var gap = 2;
+    var barW = 3;
+    var totalW = bars * barW + (bars - 1) * gap;
+    var startX = (w - totalW) / 2;
+    var maxH = h * 0.7;
     var t = (ts || 0) * 0.001;
 
     ctx.clearRect(0, 0, w, h);
 
     for (var i = 0; i < bars; i++) {
-      var val = 0.3 + 0.25 * Math.sin(t * 3.0 + i * 0.8)
-                    + 0.2 * Math.sin(t * 5.0 + i * 1.3)
-                    + 0.15 * Math.sin(t * 1.5 + i * 2.1);
-      val = Math.max(0.1, Math.min(1, val));
-      var angle = (i / bars) * Math.PI * 2 - Math.PI / 2;
-      var barLen = innerR + val * (maxR - innerR);
+      var val = 0.25 + 0.3 * Math.sin(t * 3.2 + i * 1.1)
+                     + 0.2 * Math.sin(t * 5.4 + i * 0.7)
+                     + 0.15 * Math.sin(t * 1.8 + i * 2.3);
+      val = Math.max(0.12, Math.min(1, val));
+      var barH = val * maxH;
+      var x = startX + i * (barW + gap);
 
-      var x1 = cx + Math.cos(angle) * innerR;
-      var y1 = cy + Math.sin(angle) * innerR;
-      var x2 = cx + Math.cos(angle) * barLen;
-      var y2 = cy + Math.sin(angle) * barLen;
-
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.strokeStyle = 'rgba(186, 37, 37, ' + (0.4 + val * 0.6) + ')';
-      ctx.lineWidth = 2;
-      ctx.lineCap = 'round';
-      ctx.stroke();
+      ctx.fillStyle = 'rgba(186, 37, 37, ' + (0.45 + val * 0.55) + ')';
+      ctx.fillRect(x, cy - barH / 2, barW, barH);
     }
 
     animId = requestAnimationFrame(drawVisualizer);
