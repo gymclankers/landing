@@ -2,9 +2,9 @@
 
 :root {
   --bg: #050505;
-  --accent: #D13636;
-  --accent-dim: #961E1E;
-  --accent-glow: rgba(209, 54, 54, 0.3);
+  --accent: #BA2525;
+  --accent-dim: #851A1A;
+  --accent-glow: rgba(186, 37, 37, 0.3);
   --text: #e5e5e5;
   --text-muted: #888;
   --surface: rgba(20, 20, 20, 0.85);
@@ -226,8 +226,8 @@ body {
 }
 
 .btn-primary:hover {
-  background: #E04A4A;
-  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(209, 54, 54, 0.15);
+  background: #D03333;
+  box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(186, 37, 37, 0.15);
   transform: translateY(-1px);
 }
 
@@ -341,7 +341,7 @@ body {
 
 .btn-music:hover {
   transform: none;
-  box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(209, 54, 54, 0.1);
+  box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(186, 37, 37, 0.1);
 }
 
 .btn-music:hover::before {
@@ -350,7 +350,7 @@ body {
 }
 
 .btn-music:hover::after {
-  background: #E04A4A;
+  background: #D03333;
 }
 
 .btn-music:hover .note {
@@ -371,7 +371,7 @@ body {
 
 .player-placeholder {
   background: var(--surface);
-  border: 1px solid rgba(209, 54, 54, 0.15);
+  border: 1px solid rgba(186, 37, 37, 0.15);
   border-radius: 12px;
   overflow: hidden;
 }
