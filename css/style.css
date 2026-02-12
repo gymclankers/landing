@@ -323,20 +323,82 @@ body {
   transform: translateY(-1px);
 }
 
-/* Music button — note triplet */
+/* Music button — note triplet + electric pulse */
 .btn-music {
+  position: relative;
   gap: 0.3rem;
+  overflow: hidden;
 }
 
 .btn-music .note {
   font-size: 1.1rem;
   color: #000;
-  transition: color 0.25s ease;
+  position: relative;
+  z-index: 1;
+  transition: text-shadow 0.3s ease;
 }
 
 .btn-music .note-mid {
   transform: translateY(-3px);
   display: inline-block;
+}
+
+/* Rotating electric charge — two bright sparks circling the border */
+.btn-music::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  aspect-ratio: 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    rgba(255,255,255,0.15) 4%,
+    #fff 8%,
+    rgba(255,255,255,0.15) 12%,
+    transparent 16%,
+    transparent 50%,
+    rgba(255,255,255,0.1) 54%,
+    rgba(255,255,255,0.6) 58%,
+    rgba(255,255,255,0.1) 62%,
+    transparent 66%
+  );
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Inner fill covers center — rotating gradient only visible at 2px border edge */
+.btn-music::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.btn-music:hover {
+  transform: none;
+  box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(209, 54, 54, 0.1);
+}
+
+.btn-music:hover::before {
+  opacity: 1;
+  animation: electricSpin 1.2s linear infinite;
+}
+
+.btn-music:hover::after {
+  background: #E04A4A;
+}
+
+.btn-music:hover .note {
+  text-shadow: 0 0 6px var(--accent-glow);
+}
+
+@keyframes electricSpin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 /* Spotify player */
