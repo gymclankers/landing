@@ -149,7 +149,8 @@
   });
 
   // Volume
-  var savedVolume = 1;
+  var savedVolume = 0.5;
+  audio.volume = 0.5;
   var mpcVolSlider = document.getElementById('mpc-volume-slider');
   var mpcVolBtn = document.getElementById('mpc-volume-btn');
   var mpcVolOn = mpcVolBtn ? mpcVolBtn.querySelector('.mpc-vol-on') : null;
