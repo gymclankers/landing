@@ -583,6 +583,21 @@ body {
   color: #444;
 }
 
+.legal-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+}
+.legal-links a {
+  color: #444;
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.1em;
+}
+.legal-links a:hover { color: #888; }
+
 /* ─── Mobile-only elements: hidden by default ─── */
 .mobile-player-card,
 .mobile-viz-wrap,
