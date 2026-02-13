@@ -150,23 +150,35 @@
 
   // Volume
   var savedVolume = 1;
+  var mpcVolSlider = document.getElementById('mpc-volume-slider');
+  var mpcVolBtn = document.getElementById('mpc-volume-btn');
+  var mpcVolOn = mpcVolBtn ? mpcVolBtn.querySelector('.mpc-vol-on') : null;
+  var mpcVolOff = mpcVolBtn ? mpcVolBtn.querySelector('.mpc-vol-off') : null;
 
   function updateVolIcon() {
     var muted = audio.muted || audio.volume === 0;
     volOn.style.display = muted ? 'none' : '';
     volOff.style.display = muted ? '' : 'none';
+    if (mpcVolOn) mpcVolOn.style.display = muted ? 'none' : '';
+    if (mpcVolOff) mpcVolOff.style.display = muted ? '' : 'none';
+  }
+
+  function syncVolumeSliders() {
+    var val = audio.muted ? 0 : audio.volume;
+    volumeSlider.value = val;
+    if (mpcVolSlider) mpcVolSlider.value = val;
   }
 
   volumeBtn.addEventListener('click', function () {
     if (audio.muted) {
       audio.muted = false;
       audio.volume = savedVolume || 1;
-      volumeSlider.value = audio.volume;
     } else {
       savedVolume = audio.volume || 1;
       audio.muted = true;
     }
     updateVolIcon();
+    syncVolumeSliders();
   });
 
   volumeSlider.addEventListener('input', function () {
@@ -174,7 +186,32 @@
     audio.muted = false;
     if (audio.volume > 0) savedVolume = audio.volume;
     updateVolIcon();
+    if (mpcVolSlider) mpcVolSlider.value = this.value;
   });
+
+  if (mpcVolBtn) {
+    mpcVolBtn.addEventListener('click', function () {
+      if (audio.muted) {
+        audio.muted = false;
+        audio.volume = savedVolume || 1;
+      } else {
+        savedVolume = audio.volume || 1;
+        audio.muted = true;
+      }
+      updateVolIcon();
+      syncVolumeSliders();
+    });
+  }
+
+  if (mpcVolSlider) {
+    mpcVolSlider.addEventListener('input', function () {
+      audio.volume = parseFloat(this.value);
+      audio.muted = false;
+      if (audio.volume > 0) savedVolume = audio.volume;
+      updateVolIcon();
+      volumeSlider.value = this.value;
+    });
+  }
 
   // Scrubbing — mouse + touch
   var scrubbing = false;
@@ -231,54 +268,81 @@
   }, 5200);
 
   // ─── Simulated visualizer (no Web Audio — avoids CORS hijack) ───
-  var canvas = document.getElementById('hero-visualizer');
-  var ctx = canvas ? canvas.getContext('2d') : null;
+  var heroCanvas = document.getElementById('hero-visualizer');
+  var heroCtx = heroCanvas ? heroCanvas.getContext('2d') : null;
+  var mobileCanvas = document.getElementById('mobile-visualizer');
+  var mobileCtx = mobileCanvas ? mobileCanvas.getContext('2d') : null;
   var animId = null;
 
-  function drawVisualizer(ts) {
-    if (!ctx) return;
+  // Shared EQ value generator
+  function getBarValue(t, i) {
+    var val = 0.25 + 0.3 * Math.sin(t * 3.2 + i * 1.1)
+                   + 0.2 * Math.sin(t * 5.4 + i * 0.7)
+                   + 0.15 * Math.sin(t * 1.8 + i * 2.3);
+    return Math.max(0.1, Math.min(1, val));
+  }
 
-    var w = canvas.width;
-    var h = canvas.height;
-    var bars = 7;
-    var cubeH = 4;       // height of each cube segment
-    var cubeGap = 1.5;   // vertical gap between cubes
-    var barW = 5;
-    var gap = 3;
-    var totalW = bars * barW + (bars - 1) * gap;
+  // Draw stacked cubes on any canvas context
+  function drawEQ(c, cx, numBars, cubeW, cubeH, cubeGap, barGap, maxCubes, t) {
+    var w = c.width;
+    var h = c.height;
+    var totalW = numBars * cubeW + (numBars - 1) * barGap;
     var startX = (w - totalW) / 2;
-    var floor = h - 4;   // flat bottom baseline
-    var maxCubes = 8;
-    var t = (ts || 0) * 0.001;
+    var floor = h - 4;
 
-    ctx.clearRect(0, 0, w, h);
+    cx.clearRect(0, 0, w, h);
 
-    for (var i = 0; i < bars; i++) {
-      var val = 0.25 + 0.3 * Math.sin(t * 3.2 + i * 1.1)
-                     + 0.2 * Math.sin(t * 5.4 + i * 0.7)
-                     + 0.15 * Math.sin(t * 1.8 + i * 2.3);
-      val = Math.max(0.1, Math.min(1, val));
-      var numCubes = Math.max(1, Math.round(val * maxCubes));
-      var x = startX + i * (barW + gap);
+    for (var i = 0; i < numBars; i++) {
+      var val = getBarValue(t, i);
+      var nc = Math.max(1, Math.round(val * maxCubes));
+      var x = startX + i * (cubeW + barGap);
 
-      for (var j = 0; j < numCubes; j++) {
+      for (var j = 0; j < nc; j++) {
         var y = floor - j * (cubeH + cubeGap) - cubeH;
         var brightness = 0.35 + (j / maxCubes) * 0.65;
-        ctx.fillStyle = 'rgba(186, 37, 37, ' + brightness + ')';
-        ctx.fillRect(x, y, barW, cubeH);
+        cx.fillStyle = 'rgba(186, 37, 37, ' + brightness + ')';
+        cx.fillRect(x, y, cubeW, cubeH);
       }
+    }
+  }
+
+  function resizeMobileCanvas() {
+    if (!mobileCanvas) return;
+    var wrap = document.getElementById('mobile-viz-wrap');
+    if (!wrap) return;
+    var rect = wrap.getBoundingClientRect();
+    mobileCanvas.width = Math.round(rect.width * (window.devicePixelRatio || 1));
+    mobileCanvas.height = Math.round(rect.height * (window.devicePixelRatio || 1));
+  }
+
+  function drawVisualizer(ts) {
+    var t = (ts || 0) * 0.001;
+
+    // Hero canvas (small, inside circle button)
+    if (heroCtx) {
+      drawEQ(heroCanvas, heroCtx, 7, 5, 4, 1.5, 3, 8, t);
+    }
+
+    // Mobile canvas (larger, scaled)
+    if (mobileCtx) {
+      var dpr = window.devicePixelRatio || 1;
+      drawEQ(mobileCanvas, mobileCtx, 15, Math.round(8 * dpr), Math.round(6 * dpr), Math.round(3 * dpr), Math.round(5 * dpr), 12, t);
     }
 
     animId = requestAnimationFrame(drawVisualizer);
   }
 
   audio.addEventListener('play', function () {
-    if (ctx) drawVisualizer();
+    resizeMobileCanvas();
+    drawVisualizer();
   });
 
   audio.addEventListener('pause', function () {
     if (animId) { cancelAnimationFrame(animId); animId = null; }
   });
+
+  // Resize mobile canvas on orientation change
+  window.addEventListener('resize', resizeMobileCanvas);
 
   // ─── Tracklist ───
   var tracklistEl = document.getElementById('tracklist-list');

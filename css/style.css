@@ -585,6 +585,7 @@ body {
 
 /* ─── Mobile-only elements: hidden by default ─── */
 .mobile-player-card,
+.mobile-viz-wrap,
 .scroll-hint,
 .mobile-socials,
 .mini-bar {
@@ -637,6 +638,24 @@ body {
   .socials { display: none !important; }
   .community-cta { display: none !important; }
 
+  /* ─── Mobile visualizer ─── */
+  .mobile-viz-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: 80px;
+    max-height: 200px;
+    width: 100%;
+  }
+
+  .mobile-visualizer {
+    width: 100%;
+    max-width: 320px;
+    height: 100%;
+    opacity: 0.6;
+  }
+
   /* ─── Mobile player card ─── */
   .mobile-player-card {
     display: flex;
@@ -648,7 +667,6 @@ body {
     border-radius: 8px;
     padding: 0.75rem 1rem;
     gap: 0.6rem;
-    margin-top: auto;
   }
 
   .mpc-top {
@@ -770,6 +788,53 @@ body {
   .mpc-btn svg {
     width: 24px;
     height: 24px;
+  }
+
+  /* Volume row */
+  .mpc-volume {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.25rem;
+  }
+
+  .mpc-volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .mpc-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+  }
+
+  .mpc-volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+  }
+
+  .mpc-volume-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mpc-volume-btn svg {
+    width: 20px;
+    height: 20px;
   }
 
   /* ─── Scroll hint ─── */
