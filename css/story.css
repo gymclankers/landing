@@ -1,0 +1,449 @@
+/* GymClankers — /story page styles */
+
+:root {
+  --bg: #050505;
+  --accent: #BA2525;
+  --accent-dim: #851A1A;
+  --accent-glow: rgba(186, 37, 37, 0.3);
+  --text: #e5e5e5;
+  --text-muted: #888;
+  --surface: rgba(20, 20, 20, 0.85);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── Navigation ── */
+.story-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95), transparent);
+  pointer-events: none;
+}
+
+.story-nav a {
+  pointer-events: all;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.story-nav a:hover {
+  color: var(--accent);
+}
+
+/* ── Hero ── */
+.story-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 0;
+}
+
+.hero-bg .art-slot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.7) 70%, var(--bg) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}
+
+.hero-designation {
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 0.9;
+  color: var(--text);
+  text-shadow: 0 0 60px var(--accent-glow), 0 0 120px rgba(186, 37, 37, 0.15);
+}
+
+.hero-subtitle {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--text-muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  font-weight: 400;
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  animation: bobDown 2s ease-in-out infinite;
+}
+
+.hero-scroll-hint svg {
+  width: 24px;
+  height: 24px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+@keyframes bobDown {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ── Story sections ── */
+.story-section {
+  position: relative;
+  padding: 6rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.story-section.wide {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section headings ── */
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.section-heading {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--text);
+}
+
+/* ── Narrative text ── */
+.narrative {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.8;
+  color: #ccc;
+  font-weight: 400;
+}
+
+.narrative p {
+  margin-bottom: 1.5rem;
+}
+
+.narrative strong,
+.narrative .accent {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.narrative em {
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ── Image placeholder slots ── */
+.art-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0a;
+  border: 1px dashed rgba(186, 37, 37, 0.3);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.art-placeholder::before {
+  content: 'ART PENDING';
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: #333;
+  font-weight: 600;
+}
+
+.art-placeholder img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* When image is present, hide the placeholder text */
+.art-placeholder:has(img) {
+  border-color: transparent;
+}
+
+.art-placeholder:has(img)::before {
+  display: none;
+}
+
+/* ── SVG dividers ── */
+.svg-divider {
+  display: block;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  height: auto;
+  overflow: visible;
+  opacity: 0.5;
+}
+
+.svg-divider.wide {
+  max-width: 100%;
+  padding: 0 2rem;
+}
+
+/* ── Parallax layers ── */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* ── The Core — big typography ── */
+.core-section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.core-quote {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1.4rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+  max-width: 700px;
+}
+
+.core-quote .accent {
+  color: var(--accent);
+}
+
+.core-preamble {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+  line-height: 1.8;
+  color: #ccc;
+  margin-bottom: 3rem;
+  max-width: 600px;
+}
+
+.core-preamble p {
+  margin-bottom: 1.5rem;
+}
+
+/* ── Sound section — visualizer ── */
+.sound-visualizer {
+  width: 100%;
+  max-width: 600px;
+  height: 120px;
+  margin: 3rem auto;
+  display: block;
+}
+
+.sound-visualizer rect {
+  fill: var(--accent);
+  opacity: 0.6;
+}
+
+.sound-visualizer .bar-bright {
+  opacity: 1;
+}
+
+/* ── Footer ── */
+.story-footer {
+  padding: 4rem 2rem;
+  text-align: center;
+  border-top: 1px solid rgba(186, 37, 37, 0.15);
+}
+
+.footer-cta {
+  margin-bottom: 2rem;
+}
+
+.footer-cta .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.footer-cta .btn:hover {
+  background: #9a1e1e;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.footer-cta .btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.footer-socials a {
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+.footer-socials a:hover {
+  color: var(--accent);
+}
+
+.footer-socials svg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-home {
+  font-size: 0.8rem;
+  color: #444;
+  letter-spacing: 0.15em;
+}
+
+.footer-home a {
+  color: #444;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-home a:hover {
+  color: var(--text-muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .story-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .core-section {
+    padding: 4rem 1.5rem;
+    min-height: 60vh;
+  }
+
+  .story-nav {
+    padding: 0.75rem 1.25rem;
+  }
+
+  .art-placeholder {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .parallax-layer {
+    transform: none !important;
+  }
+
+  .hero-scroll-hint {
+    animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
