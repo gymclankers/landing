@@ -5,8 +5,8 @@
   --accent: #BA2525;
   --accent-dim: #851A1A;
   --accent-glow: rgba(186, 37, 37, 0.3);
-  --text: #e5e5e5;
-  --text-muted: #888;
+  --text: #efefef;
+  --text-muted: #aaa;
   --surface: rgba(20, 20, 20, 0.85);
 }
 
@@ -196,7 +196,7 @@ body {
 .narrative {
   font-size: clamp(1rem, 2.5vw, 1.15rem);
   line-height: 1.8;
-  color: #ccc;
+  color: #ddd;
   font-weight: 400;
 }
 
@@ -307,7 +307,7 @@ body {
 .core-preamble {
   font-size: clamp(1rem, 2.5vw, 1.15rem);
   line-height: 1.8;
-  color: #ccc;
+  color: #ddd;
   margin-bottom: 3rem;
   max-width: 600px;
   margin-left: auto;

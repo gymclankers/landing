@@ -5,8 +5,8 @@
   --accent: #BA2525;
   --accent-dim: #851A1A;
   --accent-glow: rgba(186, 37, 37, 0.3);
-  --text: #e5e5e5;
-  --text-muted: #888;
+  --text: #efefef;
+  --text-muted: #aaa;
   --surface: rgba(20, 20, 20, 0.85);
 }
 
@@ -50,7 +50,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(5, 5, 5, 0.65);
+  background: rgba(5, 5, 5, 0.50);
 }
 
 /* Hero layout */
@@ -84,7 +84,7 @@ body {
 
 /* Robot arm — brighter at rest, flex on hover */
 .robot-arm {
-  opacity: 0.85;
+  opacity: 0.92;
   transition: opacity 0.3s ease, transform 0.3s ease, filter 0.3s ease;
   transform-origin: 100px 240px; /* shoulder joint pivot */
 }
@@ -505,7 +505,7 @@ body {
   gap: 0.75rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(186, 37, 37, 0.15);
+  border-bottom: 1px solid rgba(186, 37, 37, 0.25);
 }
 
 .tracklist-album {
@@ -545,7 +545,7 @@ body {
 }
 
 .tracklist-row:hover {
-  background: rgba(186, 37, 37, 0.08);
+  background: rgba(186, 37, 37, 0.1);
   color: var(--text);
 }
 
@@ -559,7 +559,7 @@ body {
   text-align: right;
   flex-shrink: 0;
   font-size: 0.75rem;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .tracklist-row.active .tracklist-num {
@@ -590,14 +590,14 @@ body {
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.15em;
-  color: #666;
+  color: #888;
 }
 
 .sig-line {
   display: block;
   width: 40px;
   height: 1px;
-  background: #444;
+  background: #555;
 }
 
 .legal-links {
@@ -608,12 +608,12 @@ body {
   font-size: 0.7rem;
 }
 .legal-links a {
-  color: #666;
+  color: #888;
   text-decoration: none;
   font-family: 'Rajdhani', sans-serif;
   letter-spacing: 0.1em;
 }
-.legal-links a:hover { color: #aaa; }
+.legal-links a:hover { color: #bbb; }
 
 /* ─── Mobile-only elements: hidden by default ─── */
 .mobile-player-card,
@@ -750,7 +750,7 @@ body {
     right: 0;
     height: 6px;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.18);
     border-radius: 3px;
   }
 
@@ -875,7 +875,7 @@ body {
     justify-content: center;
     padding: 0.5rem 0;
     color: var(--text-muted);
-    opacity: 0.4;
+    opacity: 0.55;
     animation: scrollBounce 2s ease-in-out infinite;
   }
 
@@ -948,7 +948,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 99px;
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.8rem;
@@ -1038,7 +1038,7 @@ body {
   .mini-bar-progress {
     flex: 1;
     height: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.18);
     border-radius: 2px;
     overflow: hidden;
     min-width: 0;
@@ -1075,7 +1075,7 @@ body {
   right: 0;
   z-index: 100;
   background: rgba(10, 10, 10, 0.95);
-  border-top: 1px solid rgba(186, 37, 37, 0.2);
+  border-top: 1px solid rgba(186, 37, 37, 0.3);
   transform: translateY(100%);
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1156,7 +1156,7 @@ body {
   padding: 4px;
   pointer-events: auto;
   cursor: grab;
-  opacity: 0.5;
+  opacity: 0.65;
   transition: opacity 0.3s ease;
   filter: drop-shadow(0 0 3px var(--accent-glow));
   z-index: 4;
@@ -1167,7 +1167,7 @@ body {
 }
 
 .player-bar.playing .progress-robot {
-  opacity: 0.8;
+  opacity: 0.9;
   animation: robotRun 0.4s steps(2) infinite;
 }
 
@@ -1185,7 +1185,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.4rem 1rem;
-  opacity: 0.3;
+  opacity: 0.5;
   transition: opacity 0.3s ease;
 }
 
@@ -1277,14 +1277,14 @@ body {
 .track-time {
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.75rem;
-  color: #555;
+  color: #777;
   white-space: nowrap;
 }
 
 .track-duration {
   font-family: 'Rajdhani', sans-serif;
   font-size: 0.75rem;
-  color: #444;
+  color: #666;
   white-space: nowrap;
 }
 

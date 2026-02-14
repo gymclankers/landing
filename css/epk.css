@@ -5,8 +5,8 @@
   --accent: #BA2525;
   --accent-dim: #851A1A;
   --accent-glow: rgba(186, 37, 37, 0.3);
-  --text: #e5e5e5;
-  --text-muted: #888;
+  --text: #efefef;
+  --text-muted: #aaa;
   --surface: rgba(20, 20, 20, 0.85);
   --gold: #C5A54E;
 }
@@ -102,7 +102,7 @@ body {
 .epk-bio {
   font-size: 1.05rem;
   line-height: 1.8;
-  color: #ccc;
+  color: #ddd;
 }
 
 .epk-bio strong {
